@@ -1,4 +1,4 @@
-class LoginServices {
+class LoginService {
   login(credential) {
     // logs in the user
     // returns the logged in user
@@ -17,9 +17,13 @@ class LoginServices {
     // gets the logged in user from local storage
   }
 
+  removeUserFromLocalStorage() {
+    // removes the logged in user from local storage
+  }
+
   createNewAccount(credential) {
     // creates a new account
   }
 }
 
-export default new LoginServices();
+export default new LoginService();
