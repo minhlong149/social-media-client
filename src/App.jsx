@@ -24,14 +24,13 @@ function App() {
     }
   }, []);
 
+  const logout = () => {
+    LoginServices.removeUserFromLocalStorage();
+    setUser(null);
+  };
+
   return (
-    <>
-      {user !== null ? (
-        <Home user={user} updateUser={updateUser} />
-      ) : (
-        <Login updateUser={updateUser} />
-      )}
-    </>
+    <>{user !== null ? <Home user={user} logout={logout} /> : <Login updateUser={updateUser} />}</>
   );
 }
 
