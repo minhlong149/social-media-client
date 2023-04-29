@@ -8,6 +8,9 @@ function Header({ logout, user }) {
         <Link to='/'>
           <button className='bg-sky-500 rounded text-white px-2 py-1'>Home</button>
         </Link>
+        <Link to={`/create`}>
+          <button className='bg-sky-500 rounded text-white px-2 py-1'>New post</button>
+        </Link>
         <Link to={`/${user.username}`}>
           <button className='bg-sky-500 rounded text-white px-2 py-1'>Profile</button>
         </Link>

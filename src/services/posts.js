@@ -44,6 +44,9 @@ class PostService {
 
     return posts;
   }
+
+  createPost(post) {
+  }
 }
 
 export default new PostService();
