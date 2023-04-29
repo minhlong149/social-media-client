@@ -4,10 +4,12 @@ class PostService {
       {
         id: 1,
         caption: 'This is a post',
+        author: user.username,
       },
       {
         id: 2,
         caption: 'This is another post',
+        author: user.username,
       },
     ];
 
@@ -29,6 +31,18 @@ class PostService {
       ],
     };
     return fullPost;
+  }
+
+  getPostsByUser(user) {
+    const posts = [
+      {
+        id: 3,
+        caption: 'This is a post by a user',
+        author: user.username,
+      },
+    ];
+
+    return posts;
   }
 }
 
