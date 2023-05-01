@@ -20,6 +20,15 @@ function Header({ logout }) {
         <Link to={`/${user.username}`}>
           <button className='bg-sky-500 rounded text-white px-2 py-1'>Profile</button>
         </Link>
+        <Link to={`/search`}>
+          <button className='bg-sky-500 rounded text-white px-2 py-1'>Search</button>
+        </Link>
+        <Link to={`/notifications`}>
+          <button className='bg-sky-500 rounded text-white px-2 py-1'>Notifications</button>
+        </Link>
+        <Link to={`/settings`}>
+          <button className='bg-sky-500 rounded text-white px-2 py-1'>Settings</button>
+        </Link>
         <button className='bg-sky-500 rounded text-white px-2 py-1' onClick={logout}>
           Log out
         </button>
