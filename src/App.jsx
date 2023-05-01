@@ -2,35 +2,43 @@ import React, { useEffect, useState } from 'react';
 
 import Home from './components/Home.jsx';
 import Login from './components/Login/Login.jsx';
-import LoginServices from './services/login.js';
+import loginServices from './services/login.js';
 
-// The App component takes care of the user's authentication status.
-// If the user is authenticated, it renders the Home component.
-// If the user is not authenticated, it renders the Login component.
+export const UserContext = React.createContext();
 
 function App() {
   const [user, setUser] = useState(null);
-  const updateUser = (newUser) => {
-    setUser(newUser);
+
+  const login = (credential) => {
+    const user = loginServices.login(credential);
+    if (user !== null) {
+      setUser(user);
+      loginServices.storeUserToLocalStorage(user);
+    }
   };
 
-  // If a user is logged in, set the user to the logged in user
-  // This is used to keep the user logged in if they refresh the page
+  const logout = () => {
+    loginServices.removeUserFromLocalStorage();
+    setUser(null);
+  };
 
   useEffect(() => {
-    const foundUser = LoginServices.getUserFromLocalStorage();
+    const foundUser = loginServices.getUserFromLocalStorage();
     if (foundUser) {
       setUser(foundUser);
     }
   }, []);
 
-  const logout = () => {
-    LoginServices.removeUserFromLocalStorage();
-    setUser(null);
-  };
-
   return (
-    <>{user !== null ? <Home user={user} logout={logout} /> : <Login updateUser={updateUser} />}</>
+    <>
+      {user !== null ? (
+        <UserContext.Provider value={user}>
+          <Home logout={logout} />
+        </UserContext.Provider>
+      ) : (
+        <Login login={login} />
+      )}
+    </>
   );
 }
 

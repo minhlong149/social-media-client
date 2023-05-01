@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 
-function Header({ logout, user }) {
+import { UserContext } from '../../App.jsx';
+
+function Header({ logout }) {
+  const user = useContext(UserContext);
   return (
     <header>
       <nav>

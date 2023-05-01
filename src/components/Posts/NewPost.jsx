@@ -19,7 +19,7 @@ function NewPost({ user }) {
 
   return (
     <section>
-      <h1>Create new post</h1>
+      <h2 className='text-xl font-bold'>Create new post</h2>
       <button className='bg-sky-500 rounded text-white px-2 py-1' onClick={handleCreatePost}>
         Add post
       </button>
