@@ -14,6 +14,9 @@ function Header({ logout }) {
         <Link to={`/create`}>
           <button className='bg-sky-500 rounded text-white px-2 py-1'>New post</button>
         </Link>
+        <Link to={`/friends`}>
+          <button className='bg-sky-500 rounded text-white px-2 py-1'>Friends</button>
+        </Link>
         <Link to={`/${user.username}`}>
           <button className='bg-sky-500 rounded text-white px-2 py-1'>Profile</button>
         </Link>

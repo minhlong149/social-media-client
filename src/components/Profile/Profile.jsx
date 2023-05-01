@@ -1,19 +1,25 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useParams, Link } from 'react-router-dom';
 
 import postService from '../../services/posts.js';
+import userService from '../../services/user.js';
 import Post from '../Posts/Post.jsx';
-import { UserContext } from '../../App.jsx';
 
 function Profile() {
-  const user = useContext(UserContext);
+  const { username } = useParams();
+  const user = userService.getUserByUsername(username);
   const posts = postService.getPostsByUser(user);
 
   return (
     <section>
-      <h2 className='text-xl font-bold'>Welcome to {user.firstName} profile</h2>
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
+        <h2 className='text-xl font-bold'>Welcome to {user.firstName} profile</h2>
+        {posts.map((post) => (
+          <Post key={post.id} post={post} />
+        ))}
+
+        <Link to={`/${user.username}/friends`} state={user}>
+          <button className='bg-sky-500 rounded text-white px-2 py-1'>View friend list</button>
+        </Link>
     </section>
   );
 }

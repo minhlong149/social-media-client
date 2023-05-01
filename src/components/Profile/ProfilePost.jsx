@@ -1,5 +1,5 @@
 import React from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, Link } from 'react-router-dom';
 
 import postService from '../../services/posts.js';
 
@@ -16,6 +16,10 @@ function ProfilePost() {
           <li key={comment.id}>{comment.text}</li>
         ))}
       </ul>
+
+      <Link to={`/${post.author}`}>
+        <button className='bg-sky-500 rounded text-white px-2 py-1'>View profile</button>
+      </Link>
     </section>
   );
 }
