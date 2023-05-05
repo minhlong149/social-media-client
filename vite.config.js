@@ -6,5 +6,11 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
+    proxy: {
+      '/api': {
+        target: 'https://ie213-social-media-server.cyclic.app',
+        changeOrigin: true,
+      },
+    }
   },
 });
