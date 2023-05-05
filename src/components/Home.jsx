@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import Footer from './Home/Footer.jsx';
@@ -12,8 +12,23 @@ import Friends from './Friends/Friends.jsx';
 import Search from './Search/Search.jsx';
 import Notifications from './Notifications/Notifications.jsx';
 import Settings from './Settings/Settings.jsx';
+import { socket } from '../services/socket.js';
+import { UserContext } from '../App.jsx';
 
 function Home({ logout }) {
+  const user = useContext(UserContext)
+  useEffect(() => {
+    console.log(user);
+    socket.auth = { user };
+    socket.connect();
+
+    console.log('socket connected');
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [user]);
+
   return (
     <>
       <Header logout={logout} />
