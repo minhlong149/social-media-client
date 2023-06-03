@@ -17,17 +17,17 @@ import { UserContext } from '../App.jsx';
 
 function Home({ logout }) {
   const user = useContext(UserContext)
-  useEffect(() => {
-    console.log(user);
-    socket.auth = { user };
-    socket.connect();
+  // useEffect(() => {
+  //   console.log(user);
+  //   socket.auth = { user };
+  //   socket.connect();
 
-    console.log('socket connected');
+  //   console.log('socket connected');
 
-    return () => {
-      socket.disconnect();
-    };
-  }, [user]);
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, [user]);
 
   return (
     <>
