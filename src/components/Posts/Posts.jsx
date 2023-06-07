@@ -6,13 +6,15 @@ import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
 import userService from '../../services/user.js';
 import NavBar from '../Home/NavBar.jsx';
+
 function Posts() {
+  let like = false;
   const navigate = useNavigate();
   const user = useContext(UserContext);
   const [posts, setPosts] = useState([]);
+  const [likes, setLikes] = useState([]);
   console.log(user);
   const filter = 'popular';
-
   const retrievePosts = () => {
     postService.getPostsForUser(user)
       .then((response) => {
@@ -26,19 +28,37 @@ function Posts() {
 
   useEffect(() => retrievePosts(), []);
 
+  const fetchLikes = async (post) => {
+  // Lấy dữ liệu like từ máy chủ
+  const res = await postService.getFullPost(post.id);
+  // Cập nhật lại dữ liệu like trong state
+  setLikes(res.data.likes);
+  };
+  const isLikedByMe = !!likes.find(like => like === user._id);
+  console.log(isLikedByMe)
+  const isMeLikeThisPost = (post) => {
+    var data = user._id;
+    let res;
+    if(isLikedByMe)
+    {
+      res = postService.unLike(post, user);
+      console.log('Unlike this post');
+      fetchLikes(post);
+      return;
+    } else {
+      res = postService.addLike(post, data);
+      console.log('Like this post');
+      fetchLikes(post);
+      return;
+    }
+  }
   const handleClickUser = (user) => {
     navigate(`/${user.username}/friends`);
   };
   const handleClickPost = (post) => {
-    navigate(`/post/${post.id}`);
+    navigate(`/post/${post.id}`, {state: {currentPost: post}});
   }
-  const handleLikePost = (post) => {
-    postService.addLike(post);
-  }
-  // const handleClickHome = () =>
-  // {
-  //   navigate(`/`);
-  // }
+ 
   return (
     <section>
       <div className='md:flex mt-4 max-w-4xl mx-auto gap-6 mb-24 md:mb-0'>
@@ -101,23 +121,24 @@ function Posts() {
                   </div>
                 </div>
                 <div className='mt-5 flex gap-8'>
-                  <button className='flex gap-2 items-center' onClick={() => handleLikePost(post)}>
-                    <svg
-                      xmlns='http://www.w3.org/2000/svg'
-                      fill='none'
-                      viewBox='0 0 24 24'
-                      stroke-width='1.5'
-                      stroke='currentColor'
-                      class='w-6 h-6'
-                    >
-                      <path
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        d='M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z'
-                      ></path>
-                    </svg>
-                    {post.likes.length}
-                  </button>
+                    <button className='flex gap-2 items-center' onClick={() => isMeLikeThisPost(post)}>
+                      <svg
+                        xmlns='http://www.w3.org/2000/svg'
+                        fill='none'
+                        viewBox='0 0 24 24'
+                        stroke-width='1.5'
+                        stroke='currentColor'
+                        className={'w-6 h-6' + (isLikedByMe ? 'fill-red-500' : '')}
+                      >
+                        <path
+                          stroke-linecap='round'
+                          stroke-linejoin='round'
+                          d='M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z'
+                        ></path>
+                      </svg>
+                      {post.likes?.length}
+                    </button>
+
                   <button className='flex gap-2 items-center'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'

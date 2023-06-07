@@ -4,24 +4,24 @@ class PostService {
   getPostsForUser(user) {
     return axios.get(`/api/posts?userID=${user._id}&sortBy=popular`);
   }
-  addLike(post) {
-    return axios.post(`/api/posts/${post.id}/likes`);
+  addLike(post, data) {
+    return axios.post(`/api/posts/${post.id}/likes`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2Y1NWUwMDQ1OWZhY2E0MDUwZWMwNCIsImlhdCI6MTY4NjE2NTE0OSwiZXhwIjoxNjg2MjUxNTQ5fQ.k2izz0znBiTFkNgYluqz9EX4KQvPBHnmILhrxP4-D8Q'
+      },
+    });
   }
-  getFullPost(post) {
-    const fullPost = {
-      ...post,
-      comments: [
-        {
-          id: 1,
-          text: 'Since the post on the profile page only has the caption, we need to get the full post from the server.',
-        },
-        {
-          id: 2,
-          text: 'So that we can display the comments as well.',
-        },
-      ],
-    };
-    return fullPost;
+  unLike(post, user) {
+    return axios.delete(`/api/posts/${post.id}/likes/${user._id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2Y1NWUwMDQ1OWZhY2E0MDUwZWMwNCIsImlhdCI6MTY4NjE2NTE0OSwiZXhwIjoxNjg2MjUxNTQ5fQ.k2izz0znBiTFkNgYluqz9EX4KQvPBHnmILhrxP4-D8Q'
+      },
+    });
+  }
+  getFullPost(postid) {
+    return axios.get(`/api/posts/${postid}`);
   }
 
   getPostsByUser(user) {
@@ -36,8 +36,7 @@ class PostService {
     return posts;
   }
 
-  createPost(post) {
-  }
+  createPost(post) {}
 }
 
 export default new PostService();
