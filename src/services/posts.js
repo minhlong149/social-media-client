@@ -2,7 +2,7 @@ import axios from "axios";
 
 class PostService {
   getPostsForUser(user) {
-    return axios.get(`/api/posts?userID=${user.userId}&sortBy=popular`);
+    return axios.get(`/api/posts?userID=${user._id}&sortBy=popular`);
   }
   addLike(post) {
     return axios.post(`/api/posts/${post.id}/likes`);

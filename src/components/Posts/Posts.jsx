@@ -3,8 +3,6 @@ import Profile from '../Profile/Profile.jsx';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App.jsx';
 import postService from '../../services/posts.js';
-import Post from './Post.jsx';
-import { SignupForm } from '../Login/SignupForm.jsx';
 import ReactTimeAgo from 'react-time-ago';
 import userService from '../../services/user.js';
 import NavBar from '../Home/NavBar.jsx';
