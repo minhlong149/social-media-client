@@ -10,27 +10,27 @@ class UserService {
 
   getFriendsOfFriends(user)
   {
-    return axios.get('http://localhost:80/api/users/'+ user._id+'/friendsoffriends');
+    return axios.get('api/users/'+ user.id+'/friendsoffriends');
    
   }
 
   getFriends(user) {
-    return axios.get('http://localhost:80/api/users/'+ user._id+'/friends');
+    return axios.get('/api/users/'+ user.id+'/friends');
   }
 
   acceptRequest(user, friendId)
   {
-    return axios.put('http://localhost:80/api/users/'+ user._id+'/friends/' + friendId);
+    return axios.put('api/users/'+ user.id+'/friends/' + friendId);
   }
 
   denyRequest(user, friendId)
   {
-    return axios.delete('http://localhost:80/api/users/'+ user._id+'/friends/' + friendId);
+    return axios.delete('api/users/'+ user.id+'/friends/' + friendId);
   }
 
   sendRequest(user, friend)
   {
-    return axios.post('http://localhost:80/api/users/'+ user._id+'/friends/', friend);
+    return axios.post('api/users/'+ user.id+'/friends/', friend);
   }
 
 

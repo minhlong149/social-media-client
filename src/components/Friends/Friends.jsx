@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 
 import userService from '../../services/user.js';
 import { UserContext } from '../../App.jsx';
-import { Card } from 'react-bootstrap';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, Button } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
 
