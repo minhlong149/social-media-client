@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import postService from '../../services/posts.js';
@@ -9,6 +9,7 @@ function Profile() {
   const { username } = useParams();
   const user = userService.getUserByUsername(username);
   const posts = postService.getPostsByUser(user);
+  
 
   return (
     <section>
