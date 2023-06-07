@@ -59,7 +59,7 @@ function Header({ logout }) {
               <Link to={`/settings`}>
                 <Button text='Settings' />
               </Link>
-              <Button text='Logout' action={logout} />
+              <Button text='Logout' action={() => logout()} />
             </div>
           </aside>
         </div>

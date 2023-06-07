@@ -24,7 +24,7 @@ function Posts() {
       });
   }
 
-  useEffect(() => retrievePosts());
+  useEffect(() => retrievePosts(), []);
 
   const handleClickUser = (user) => {
     navigate(`/${user.username}/friends`);
