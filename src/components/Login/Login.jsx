@@ -1,28 +1,26 @@
 import React, { useState } from 'react';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
 
-import { LoginForm } from './LoginForm.jsx';
-import { SignupForm } from './SignupForm.jsx';
-import loginServices from '../../services/login.js';
-
-function Login({ login }) {
+const Login = ({ updateUser, message }) => {
   const [hasAccount, setHasAccount] = useState(true);
-
-  const signup = (credential) => {
-    loginServices.createNewAccount(credential);
-    login(credential);
+  const updateFormState = () => {
+    setHasAccount(!hasAccount);
+    console.log(`Switch to ${hasAccount ? 'register' : 'sign in'} component`);
   };
 
   return (
-    <div>
-      {/* The form to login or signup */}
-      {hasAccount ? <LoginForm login={login} /> : <SignupForm signup={signup} />}
-
-      {/* The button to switch between the login and signup forms */}
-      <button onClick={() => setHasAccount(!hasAccount)}>
-        Switch to {hasAccount ? 'Sign up' : 'Login'} page
-      </button>
+    <div className='grid h-screen place-items-center bg-blue-200'>
+      <h1>{message}</h1>
+      <div className='bg-white p-8'>
+        {hasAccount ? (
+          <LoginForm switchForm={updateFormState} updateUser={updateUser} />
+        ) : (
+          <SignupForm switchForm={updateFormState} updateUser={updateUser} />
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default Login;
