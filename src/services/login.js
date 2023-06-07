@@ -1,28 +1,51 @@
+import axios from 'axios';
+
 class LoginService {
-  login(credential) {
-    // logs in the user
-    // returns the logged in user
-    // returns null if the credential is invalid
-    return {
-      username: 'root',
-      firstName: 'Test User',
-    };
+  async login(credential) {
+    try {
+      const response = await axios.post('/api/login', credential);
+      
+      if (response.status !== 200) {
+        throw new Error(response.statusText);
+      }
+      const returnedUser = response.data;
+      console.log(`Logged ${credential ? "in" : "out"} successfully: `, returnedUser);
+      return returnedUser;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        return null; // Invalid credential
+      }
+      throw new Error(error.message);
+    }
   }
 
   storeUserToLocalStorage(user) {
-    // stores the logged in user in local storage
+    localStorage.setItem('loggedInUser', JSON.stringify(user));
   }
 
   getUserFromLocalStorage() {
-    // gets the logged in user from local storage
+    const user = localStorage.getItem('loggedInUser');
+    return JSON.parse(user);
   }
 
   removeUserFromLocalStorage() {
-    // removes the logged in user from local storage
+    localStorage.removeItem('loggedInUser');
   }
 
-  createNewAccount(credential) {
-    // creates a new account
+  async createNewAccount(credential) {
+    try {
+      const response = await axios.post('/api/users/', credential);
+      
+      if (response.status !== 200) {
+        throw new Error(response.statusText);
+      }
+
+      const newUser = response.data;
+      console.log("Create new user", newUser);
+      return newUser;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 }
 
