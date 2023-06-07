@@ -29,7 +29,7 @@ function Header({ logout }) {
         <Link to={`/settings`}>
           <button className='bg-sky-500 rounded text-white px-2 py-1'>Settings</button>
         </Link>
-        <button className='bg-sky-500 rounded text-white px-2 py-1' onClick={logout}>
+        <button className='bg-sky-500 rounded text-white px-2 py-1' onClick={()=>logout()}>
           Log out
         </button>
       </nav>
