@@ -1,23 +1,12 @@
 class UserService {
-  getUserByUsername(username) {
-    return {
-      username: 'john',
-      firstName: 'John',
-    };
+  getUserByUserId(userId) {
+    return axios.get('http://localhost:3000/api/users/'+ user._id);
   }
 
   getFriends(user) {
-    return [
-      {
-        id: 1,
-        firstName: 'Jane',
-      },
-      {
-        id: 2,
-        firstName: 'Jack',
-      },
-    ];
+    return axios.get('http://localhost:3000/api/users/'+ user._id+'/friends');
   }
+
 }
 
 export default new UserService();

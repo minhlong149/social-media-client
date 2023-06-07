@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import { useParams, Link } from 'react-router-dom';
 
 import postService from '../../services/posts.js';
@@ -10,8 +10,9 @@ import { Card, Row, Col} from 'react';
 
 function Profile() {
   const { username } = useParams();
-  const user = userService.getUserByUsername(username);
+  const user = useContext(UserContext);
   const posts = postService.getPostsByUser(user);
+  
   
 
   const [UserByUsernameData, setUserByUsernameData] = React.useState('');
@@ -19,11 +20,11 @@ function Profile() {
   const [friendsData, setFriendsData] = React.useState('');
   const friends = [];
 
-  // useEffect(() => {
-  //   getUserByUsername();
-  //   getPostsByUser();
-  //   getFriends();
-  //  }, []);
+  useEffect(() => {
+    getUserByUsername();
+    getPostsByUser();
+    getFriends();
+   }, []);
 
 
   //  const tabList = [
@@ -45,17 +46,17 @@ function Profile() {
   // ];
 
 
-  //  const getUserByUsername = () => {
-  //   userService.getUserByUsername(username)
-  //     .then((response) => {
-  //       console.log(response.status);
-  //       setUserByUsernameData(response.data);
+   const getUserByUsername = () => {
+    userService.getUserByUsername(username)
+      .then((response) => {
+        console.log(response.status);
+        setUserByUsernameData(response.data);
         
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
   // const getPostsByUser = () => {
   //   postService.getPostsByUser(user)
@@ -67,49 +68,49 @@ function Profile() {
   //       console.log(e);
   //     });
   // };
-  // const getFriends = () => {
-  //   userService.getFriends(user)
-  //     .then((response) => {
-  //       console.log(response.status);
-  //       setFriendsData(response.data);
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
+  const getFriends = () => {
+    userService.getFriends(user)
+      .then((response) => {
+        console.log(response.status);
+        setFriendsData(response.data);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
 
   return (
-  //   <section>
-  //     <Row gutter={16}>
-  //   <Col span={8}>
-  //     <Card title="Card title" bordered={false}>
-  //       {getPostsByUser}
-  //       <button onClick={getUserByUsername} type='primary'>
-  //         Infomation
-  //       </button>
-  //     </Card>
-  //   </Col>
-  //   <Col span={8}>
-  //     <Card title="Card title" bordered={false}>
-  //       {getFriends}
-  //     </Card>
-  //   </Col>
-  // </Row>
-  //   </section>
-  <section>
-  <h2 className='text-xl font-bold'>Welcome to {user.firstName} profile</h2>
-  {posts.map((post) => (
-    <Post key={post.id} post={post} />
-  ))}
+    <section>
+      <Row gutter={16}>
+    <Col span={8}>
+      <Card title="Card title" bordered={false}>
+        {getPostsByUser}
+        <button onClick={getUserByUsername} type='primary'>
+          Infomation
+        </button>
+      </Card>
+    </Col>
+    <Col span={8}>
+      <Card title="Card title" bordered={false}>
+        {getFriends}
+      </Card>
+    </Col>
+  </Row>
+    </section>
+//   <section>
+//   <h2 className='text-xl font-bold'>Welcome to {user.firstName} profile</h2>
+//   {posts.map((post) => (
+//     <Post key={post.id} post={post} />
+//   ))}
 
-  <Link to={`/${user.username}/friends`} state={user}>
-    <button className='bg-sky-500 rounded text-white px-2 py-1'>View friend list</button>
-  </Link>
-  <Link >
-    <button className='bg-sky-500 rounded text-white px-2 py-1'>Update information</button>
-  </Link>
-</section>
+//   <Link to={'/users/' + data.friendId.toString()}>
+//     <button className='bg-sky-500 rounded text-white px-2 py-1'>View friend list</button>
+//   </Link>
+//   <Link >
+//     <button className='bg-sky-500 rounded text-white px-2 py-1'>Update information</button>
+//   </Link>
+// </section>
   );
 }
 
