@@ -53,7 +53,7 @@ function App() {
       {user !== null ? (
         // Render Homepage component if user is logged in
         <UserContext.Provider value={user}>
-          <Home user={user} updateUser={updateUser} />
+          <Home user={user} logout={updateUser} />
         </UserContext.Provider>
       ) : (
         // Render Login component if user is not logged in
