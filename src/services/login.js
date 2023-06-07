@@ -4,18 +4,12 @@ class LoginService {
   async login(credential) {
     try {
       const response = await axios.post('/api/login', credential);
-      
-      if (response.status !== 200) {
-        throw new Error(response.statusText);
-      }
       const returnedUser = response.data;
-      console.log(`Logged ${credential ? "in" : "out"} successfully: `, returnedUser);
+      console.log(`Logged ${credential ? 'in' : 'out'} successfully: `, returnedUser);
       return returnedUser;
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        return null; // Invalid credential
-      }
-      throw new Error(error.message);
+      console.log(error);
+      throw new Error(error);
     }
   }
 
@@ -34,17 +28,13 @@ class LoginService {
 
   async createNewAccount(credential) {
     try {
-      const response = await axios.post('/api/users/', credential);
-      
-      if (response.status !== 200) {
-        throw new Error(response.statusText);
-      }
-
+      const response = await axios.post('/api/users', credential);
       const newUser = response.data;
-      console.log("Create new user", newUser);
+      console.log('Create new user', newUser);
       return newUser;
     } catch (error) {
-      throw new Error(error.message);
+      console.log(error);
+      throw new Error(error);
     }
   }
 }
