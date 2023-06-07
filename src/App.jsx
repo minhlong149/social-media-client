@@ -22,10 +22,6 @@ function App() {
       if (user.confirmPassword) {
         // Handle creating a new user
         const returnedUser = await loginServices.createNewAccount(user);
-        // Login automatically after creating a new user
-        user.username = returnedUser.username;
-        user.password = returnedUser.password;
-        user.email = returnedUser.email;
       }
 
       // Handle user login
