@@ -3,7 +3,7 @@ class PostService {
     const posts = [
       {
         id: 1,
-        caption: 'This is a post',
+        caption: "This is a post",
         author: user.username,
       },
       {
@@ -47,6 +47,7 @@ class PostService {
 
   createPost(post) {
   }
+
 }
 
 export default new PostService();

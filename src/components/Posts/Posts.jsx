@@ -14,6 +14,7 @@ function Posts() {
         <Post key={post.id} post={post} />
       ))}
     </section>
+    
   );
 }
 

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import postService from '../../services/posts.js';
 
 function NewPost({ user }) {
@@ -15,6 +14,7 @@ function NewPost({ user }) {
       caption: 'This is a post created by user',
       author: user.username,
     };
+  
   };
 
   return (
