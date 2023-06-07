@@ -1,21 +1,12 @@
+import axios from "axios";
+
 class PostService {
   getPostsForUser(user) {
-    const posts = [
-      {
-        id: 1,
-        caption: 'This is a post',
-        author: user.username,
-      },
-      {
-        id: 2,
-        caption: 'This is another post',
-        author: user.username,
-      },
-    ];
-
-    return posts;
+    return axios.get(`/api/posts?userID=${user.userId}&sortBy=popular`);
   }
-
+  addLike(post) {
+    return axios.post(`/api/posts/${post.id}/likes`);
+  }
   getFullPost(post) {
     const fullPost = {
       ...post,

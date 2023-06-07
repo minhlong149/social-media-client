@@ -4,7 +4,8 @@ class LoginService {
     // returns the logged in user
     // returns null if the credential is invalid
     return {
-      username: 'root',
+      userId: '643f55e00459faca4050ec04',
+      username: 'HoangLong33',
       firstName: 'Test User',
     };
   }

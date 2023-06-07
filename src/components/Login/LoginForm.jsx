@@ -16,8 +16,8 @@ export function LoginForm({ login }) {
   const getCredentialsFromForm = () => {
     // TODO: Get credential from the form
     return {
-      username: 'root',
-      password: '123456',
+      username: 'HoangLong33',
+      password: '$2b$10$OF6obDSE161xnBlOFxSa6ehSQ0Qzsd1.Jgd7lj8WOpCuv4HUBoUXG',
     };
   };
 
