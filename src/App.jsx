@@ -29,7 +29,7 @@ function App() {
       setUser(returnedUser);
 
       // Save user info if saveInfo is true
-      user.saveInfo && loginServices.storeUserToLocalStorage(user);
+      user.saveInfo && loginServices.storeUserToLocalStorage(returnedUser);
     } catch (error) {
       setMessage(error.message);
       setTimeout(() => {
