@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 function Post({ post }) {
   const {author, caption, mediaURL, likes, comments, hashtags } = post;
   const [like,setLike] = useState(post.like)
   const [isLiked,setIsLiked] = useState(false)
-  const [comment, setComment] = useState(post.comment)
+  //const [comment, setComment] = useState(post.comment)
 
   const likeHandler =()=>{
     setLike(isLiked ? like-1 : like+1)
     setIsLiked(!isLiked)
   }
-  const commentHandle =() => {
-
-  }
+  // const commentHandle =(slug) => {
+  //   })
+  //}
   return (
     <section>
       <div className="post">
@@ -32,8 +32,6 @@ function Post({ post }) {
             <span className="postComments">{post.comments}</span>
           </div>
           <div>
-            {/* <img className="likeIcon" src="assets/like.png" onClick={likeHandler} alt="" />
-            <img className="likeIcon" src="assets/heart.png" onClick={likeHandler} alt="" /> */}
             <span className="postLikeCounter">{post.likes}</span>
           </div>
           <div>
