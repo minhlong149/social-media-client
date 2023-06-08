@@ -1,11 +1,12 @@
 import axios from "axios";
 
 class UserService {
-  getUserByUsername(username) {
-    return {
-      username: 'john',
-      firstName: 'John',
-    };
+  getUser(user) {
+    return axios.get('/api/users/'+ user._id);
+  }
+
+  getFriends(user) {
+    return axios.get('/api/users/'+ user._id+'/friends');
   }
 
   getFriendsOfFriends(user)
