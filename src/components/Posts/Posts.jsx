@@ -1,23 +1,20 @@
 import React, { useContext, useEffect, useState } from 'react';
-import Profile from '../Profile/Profile.jsx';
 import { useNavigate } from 'react-router-dom';
 import { UserContext } from '../../App.jsx';
 import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
-import userService from '../../services/user.js';
 import NavBar from '../Home/NavBar.jsx';
-import { data } from 'autoprefixer';
 
 function Posts() {
   const navigate = useNavigate();
   const user = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const [likes, setLikes] = useState([]);
+  const [page, setPage] = useState(0);
   let filter = 'popular';
   console.log(user);
 
   const retrievePosts = async () => {
-    postService.getPostsForUser(user, filter)
+    postService.getPostsForUser(user, filter, page)
       .then((response) => {
         console.log(response.data);
         setPosts(response.data.posts);
@@ -25,7 +22,6 @@ function Posts() {
       .catch((e) => {
         console.log(e);
       });
-    await setLikes(res.data.posts.likes);
   }
 
   useEffect(() => {
@@ -33,10 +29,13 @@ function Posts() {
   }, []);
 
   const fetchLikes = async () => {
-  // Lấy dữ liệu like từ máy chủ
-    const res = await postService.getPostsForUser(user, filter);
-  // Cập nhật lại dữ liệu like trong state
-    await setPosts(res.data.posts);
+    const res = await postService.getPostsForUser(user, filter, page);
+    setPosts((prevPosts) =>
+      prevPosts.map((post) => ({
+        ...post,
+        likes: res.data.posts.find((p) => p.id === post.id)?.likes || [],
+      })),
+    );
   };
 
 
@@ -72,79 +71,81 @@ function Posts() {
             const isLikedByMe = post.likes.includes(user._id);
             return (
               <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-5 p-4'>
-                  <div className='flex gap-3'>
-                    <div>
-                      <a>
-                        <span className='cursor-pointer' onClick={handleClickUser}>
-                          <div className='w-12 rounded-full overflow-hidden'>
-                            <img src={post.author.avatarURL} alt=''></img>
-                          </div>
+                <div className='flex gap-3'>
+                  <div>
+                    <a>
+                      <span className='cursor-pointer' onClick={handleClickUser}>
+                        <div className='w-12 rounded-full overflow-hidden'>
+                          <img src={post.author.avatarURL} alt=''></img>
+                        </div>
+                      </span>
+                    </a>
+                  </div>
+                  <div className='grow'>
+                    <p>
+                      <a href='/profile'>
+                        <span className='mr1 font-semibold cursor-pointer hover:underline'>
+                          {`${post.author.lastName} ${post.author.firstName}`}
                         </span>
                       </a>
-                    </div>
-                    <div className='grow'>
-                      <p>
-                        <a href='/profile'>
-                          <span className='mr1 font-semibold cursor-pointer hover:underline'>
-                            {`${post.author.lastName} ${post.author.firstName}`}
-                          </span>
-                        </a>
-                      </p>
-                      <p class='text-gray-500 text-sm'>
-                        <ReactTimeAgo date={post.createdAt} />
-                      </p>
-                    </div>
-                    <div className='relative'>
-                      <button className='text-gray-400'>
-                        <svg
-                          xmlns='http://www.w3.org/2000/svg'
-                          fill='none'
-                          viewBox='0 0 24 24'
-                          stroke-width='1.5'
-                          stroke='currentColor'
-                          class='w-6 h-6'
-                        >
-                          <path
-                            stroke-linecap='round'
-                            stroke-linejoin='round'
-                            d='M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
-                          ></path>
-                        </svg>
-                      </button>
-                      <div class='relative'></div>
-                    </div>
+                    </p>
+                    <p class='text-gray-500 text-sm'>
+                      <ReactTimeAgo date={post.createdAt} />
+                    </p>
                   </div>
-                <div>
-                  <p class='my-3 text-sm' onClick={()=>handleClickPost(post)}>
-                    {post.caption}
-                  </p>
-                  <div class='rounded-md overflow-hidden'>
-                    <img
-                      src={post.mediaURL}
-                      alt=''
-                    />
-                  </div>
-                </div>
-                <div className='mt-5 flex gap-8'>
-                    <button className='flex gap-2 items-center'  onClick={() => isMeLikeThisPost(post, isLikedByMe)}>
+                  <div className='relative'>
+                    <button className='text-gray-400'>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
                         viewBox='0 0 24 24'
                         stroke-width='1.5'
                         stroke='currentColor'
-                      className={`w-6 h-6  ${post.likes.includes(user._id) ? 'fill-red-500 stroke-none' : ''}`}
+                        class='w-6 h-6'
                       >
                         <path
                           stroke-linecap='round'
                           stroke-linejoin='round'
-                          d='M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z'
+                          d='M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                         ></path>
                       </svg>
-                      {post.likes?.length}
                     </button>
+                    <div class='relative'></div>
+                  </div>
+                </div>
+                <div>
+                  <p class='my-3 text-sm' onClick={() => handleClickPost(post)}>
+                    {post.caption}
+                  </p>
+                  <div class='rounded-md overflow-hidden'>
+                    <img src={post.mediaURL} alt='' />
+                  </div>
+                </div>
+                <div className='mt-5 flex gap-8'>
+                  <button
+                    className='flex gap-2 items-center'
+                    onClick={() => isMeLikeThisPost(post, isLikedByMe)}
+                  >
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      stroke-width='1.5'
+                      stroke='currentColor'
+                      className={`w-6 h-6  ${
+                        post.likes.includes(user._id) ? 'fill-red-500 stroke-none' : ''
+                      }`}
+                    >
+                      <path
+                        stroke-linecap='round'
+                        stroke-linejoin='round'
+                        d='M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z'
+                      ></path>
+                    </svg>
+                    {post.likes?.length}
+                  </button>
 
-                  <button className='flex gap-2 items-center' onClick={()=> handleClickPost(post)}>
+                  <button className='flex gap-2 items-center' onClick={() => handleClickPost(post)}>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       fill='none'
