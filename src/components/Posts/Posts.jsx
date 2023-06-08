@@ -6,6 +6,7 @@ import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
 import userService from '../../services/user.js';
 import NavBar from '../Home/NavBar.jsx';
+import { data } from 'autoprefixer';
 
 function Posts() {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ function Posts() {
   let filter = 'popular';
   console.log(user);
 
-  const retrievePosts = () => {
+  const retrievePosts = async () => {
     postService.getPostsForUser(user, filter)
       .then((response) => {
         console.log(response.data);
@@ -24,31 +25,34 @@ function Posts() {
       .catch((e) => {
         console.log(e);
       });
+    await setLikes(res.data.posts.likes);
   }
 
-  useEffect(() => retrievePosts(), []);
+  useEffect(() => {
+    retrievePosts();
+  }, []);
 
-  const fetchLikes = async (post) => {
+  const fetchLikes = async () => {
   // Lấy dữ liệu like từ máy chủ
-  const res = await postService.getFullPost(post.id);
+    const res = await postService.getPostsForUser(user, filter);
   // Cập nhật lại dữ liệu like trong state
-  setLikes(res.data.likes);
+    await setPosts(res.data.posts);
   };
-  const isLikedByMe = !!likes.find(like => like === user._id);
-  console.log(isLikedByMe)
-  const isMeLikeThisPost = (post) => {
-    var data = user._id;
+
+
+  const isMeLikeThisPost = async (post, isLikedByMe) => {
+    var data = {"userId": user._id };
     let res;
     if(isLikedByMe)
     {
-      res = postService.unLike(post, user);
+      res = await postService.unLike(post, user);
       console.log('Unlike this post');
-      fetchLikes(post);
+      fetchLikes();
       return;
     } else {
-      res = postService.addLike(post, data);
+      res = await postService.addLike(post, data, user);
       console.log('Like this post');
-      fetchLikes(post);
+      fetchLikes();
       return;
     }
   }
@@ -65,6 +69,7 @@ function Posts() {
         <NavBar></NavBar>
         <div className='mx-4 md:mx-0 md:w-8/12'>
           {posts.map((post) => {
+            const isLikedByMe = post.likes.includes(user._id);
             return (
               <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-5 p-4'>
                   <div className='flex gap-3'>
@@ -121,14 +126,14 @@ function Posts() {
                   </div>
                 </div>
                 <div className='mt-5 flex gap-8'>
-                    <button className='flex gap-2 items-center' onClick={() => isMeLikeThisPost(post)}>
+                    <button className='flex gap-2 items-center'  onClick={() => isMeLikeThisPost(post, isLikedByMe)}>
                       <svg
                         xmlns='http://www.w3.org/2000/svg'
                         fill='none'
                         viewBox='0 0 24 24'
                         stroke-width='1.5'
                         stroke='currentColor'
-                        className={'w-6 h-6' + (isLikedByMe ? 'fill-red-500' : '')}
+                      className={`w-6 h-6  ${post.likes.includes(user._id) ? 'fill-red-500 stroke-none' : ''}`}
                       >
                         <path
                           stroke-linecap='round'
@@ -139,7 +144,7 @@ function Posts() {
                       {post.likes?.length}
                     </button>
 
-                  <button className='flex gap-2 items-center'>
+                  <button className='flex gap-2 items-center' onClick={()=> handleClickPost(post)}>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       fill='none'

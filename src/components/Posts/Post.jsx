@@ -1,25 +1,55 @@
-import React , { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
+import { UserContext } from '../../App.jsx';
 import {  useParams } from 'react-router-dom';
 import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
 
 
 function Post() {
+  const user = useContext(UserContext);
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
+  const [liked, setLiked] = useState(false);
   const { postid } = useParams();
   console.log(postid);
+  console.log(user);
   useEffect(() => {
     async function fetchPost() {
       const response = await postService.getFullPost(postid);
       const data = await response.data;
       setPost(data);
       setAuthor(data.author);
+      setLiked(data.likes.some((like) => like.id === user._id));
     }
     fetchPost();
-  }, [postid]);
 
+  }, [postid]);
   
+
+   const fetchLike = async () => {
+     const res = await postService.getFullPost(postid);
+     await setPost(res.data);
+     setLiked(res.data.likes.some((like) => like.id === user._id ));
+   };
+
+  const isMeLikeThisPost = async (post, isLikedByMe) => {
+    var data = {"userId": user._id };
+    let res;
+    if(isLikedByMe)
+    {
+      res = await postService.unLike(post, user);
+      console.log('Unlike this post');
+      await fetchLike();
+      return;
+    } else {
+      res = await postService.addLike(post, data, user);
+      console.log('Like this post');
+      await fetchLike();
+      return;
+    }
+  }
+  console.log(post);
+  console.log(liked);
   return Object.keys(post).length === 0 ? (
     <section>
       <div className='justify-items-center m-10'>
@@ -52,14 +82,18 @@ function Post() {
         <div className='md:flex mt-4 max-w-4xl mx-auto gap-6 mb-24 md:mb-0'>
           <div className='fixed md:static w-full bottom-0 md:w-1/12 -mb-5'>
             <div>
-              <button className='flex gap-2 items-center my-10 '>
+              <button
+                className='flex gap-2 items-center my-10 '
+                title={post.likes.map((like) => like.lastName + ' ' + like.firstName).join(', ')}
+                onClick={() => isMeLikeThisPost(post, liked)}
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
                   viewBox='0 0 24 24'
                   stroke-width='1.5'
                   stroke='currentColor'
-                  className={'w-6 h-6'}
+                  className={`w-6 h-6  ${liked ? 'fill-red-500 stroke-none' : ''}`}
                 >
                   <path
                     stroke-linecap='round'
@@ -69,7 +103,12 @@ function Post() {
                 </svg>
                 {post.likes?.length ?? 0}
               </button>
-              <button className='flex gap-2 items-center my-10'>
+              <button
+                className='flex gap-2 items-center my-10'
+                title={post.comments
+                  .map((comment) => comment.lastName + ' ' + comment.firstName)
+                  .join(', ')}
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -86,7 +125,10 @@ function Post() {
                 </svg>
                 {post.comments?.length ?? 0}
               </button>
-              <button className='flex gap-2 items-center my-10'>
+              <button
+                className='flex gap-2 items-center my-10'
+                title={post.shares.map((share) => share.lastName + ' ' + share.firstName).join(', ')}
+              >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
                   fill='none'
@@ -156,6 +198,7 @@ function Post() {
                 </div>
               </div>
             </div>
+
             <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl   font-semibold'>
               Comment
               {post.comments && post.comments.length != 0 ? (
