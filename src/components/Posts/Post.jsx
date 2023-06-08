@@ -16,6 +16,8 @@ function Post() {
   const getComment = ({postId}) => {
     const data = new FormData();
     data.append('comments', comments);
+    console.log(comments);
+
     return data;
   };
   console.log(postId);
@@ -170,10 +172,10 @@ function Post() {
             <div>
               <div>
               <form onSubmit={AddComments}>
-                <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl font-semibold'>
+                <div className='text-3xl font-semibold'>
                   Add Comment
-                                    <div className="bg-white shadow-md shadow-gray-300 rounded-md mb-5 p-3 text-lg font-bol" key={index}>
-                                        <Input
+                                    <div className="bg-white shadow-md shadow-gray-300 rounded-md mb-5 p-3 text-lg font-bol">
+                                        <input
                                         type="text"
                                         className='flex gap-3'
                                         placeholder="Enter comment here"
