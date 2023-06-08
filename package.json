@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@esbuild/darwin-x64": "^0.17.19",
     "@material-tailwind/react": "^2.0.1",
     "axios": "^1.4.0",
     "javascript-time-ago": "^2.5.9",
