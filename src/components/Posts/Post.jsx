@@ -168,7 +168,7 @@ function Post() {
             </div>
             </div>
             <div>
-              * <div>
+              <div>
               <form onSubmit={AddComments}>
                 <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl font-semibold'>
                   Add Comment
