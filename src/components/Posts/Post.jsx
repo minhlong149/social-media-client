@@ -168,7 +168,7 @@ function Post() {
             </div>
             </div>
             <div>
-              {/* <div>
+              * <div>
               <form onSubmit={AddComments}>
                 <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl font-semibold'>
                   Add Comment
@@ -181,11 +181,11 @@ function Post() {
                                         onChange={(e) => setComments(e.target.value)}
                                     />
 
-                                    <Button className="bg-sky-500 rounded text-white px-2 py-1 mx-24 my-5" type="submit">Submit</Button>
+                                    <button className="bg-sky-500 rounded text-white px-2 py-1 mx-24 my-5" type="submit">Submit</button>
                                     </div>
                 </div>
               </form>
-              </div> */}
+              </div>
             <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl   font-semibold'>
               Comment
               {post.comments && post.comments.length != 0 ? (
