@@ -1,14 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import postService from '../../services/posts.js';
 function NewPost({ user }) {
-  const [caption] = useState('');
-  const [hashtags] = useState('');
-  const [content] = useState('');
-  const [mediaURL] = useState('');
-  const [redirect] = useState(false);
-  const handleCreatePost = () => {
+  const [caption, setCaption] = useState('');
+  const [hashtags, setHashtags] = useState('');
+  const [content, setContent] = useState('');
+  const [mediaURL, setMediaURL] = useState('');
+  const [redirect, setRedirect] = useState(false);
+  const handleCreatePost = (e) => {
+    e.preventDefault();
     const post = getPostFromForm();
-    postService.createPost(post);
+    console.log(post);
+    // postService.createPost(post);
   };
 
   const getPostFromForm = () => {
@@ -18,43 +20,26 @@ function NewPost({ user }) {
     data.set('hashtags', hashtags);
     data.set('content', content);
     data.set('mediaURL', mediaURL);
-  }
-  if (redirect) {
-    return <Navigate to={'/'} />
-  }
+    return data;
+  };
+
   return (
-    <Form>
-  <Form.Group as={Row} controlId="formHorizontalEmail">
-    <Form.Label column sm={2}>
-      Caption
-    </Form.Label>
-    <Col sm={10}>
-      <Form.Control type="caption" placeholder="Caption" />
-    </Col>
-  </Form.Group>
-  <Form>
-  <Form.Group>
-    <Form.File id="exampleFormControlFile1" label="Add image" />
-  </Form.Group>
-  </Form>
-  <Form.Group as={Row} controlId="formHorizontalPassword">
-    <Form.Label column sm={2}>
-      Hashtags
-    </Form.Label>
-    <Col sm={10}>
-      <Form.Control type="hashtags" placeholder="Hashtags" />
-    </Col>
-  </Form.Group>
-      <Form.Group controlId="exampleForm.ControlTextarea1">
-        <Form.Label>Content</Form.Label>
-        <Form.Control as="textarea" rows={3} />
-      </Form.Group>
-      <Form.Group as={Row}>
-          <Col sm={{ span: 10, offset: 2 }}>
-            <Button type="submit">Submit</Button>
-          </Col>
-      </Form.Group>
-    </Form>
+    <form onSubmit={handleCreatePost}>
+      <input
+        type='caption'
+        placeholder={'Caption'}
+        value={caption}
+        onChange={(ev) => setCaption(ev.target.value)}
+      />
+      <input
+        type='hashtags'
+        placeholder={'Hashtags'}
+        value={hashtags}
+        onChange={(ev) => setHashtags(ev.target.value)}
+      />
+      <input type='mediaURL' onChange={(ev) => setMediaURL(ev.target.value)} />
+      <button style={{ marginTop: '5px' }}>Create post</button>
+    </form>
   );
 }
 
