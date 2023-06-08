@@ -1,21 +1,24 @@
 {
   "name": "social-media-client",
-  "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "main": "server.js",
   "scripts": {
     "start": "vite --open",
     "dev": "vite --open",
+    "server": "npm run build && node server.js",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
     "@material-tailwind/react": "^2.0.1",
     "axios": "^1.4.0",
+    "express": "^4.18.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.10.0",
-    "socket.io-client": "^4.6.1"
+    "socket.io": "^4.6.2",
+    "socket.io-client": "^4.6.2"
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
@@ -25,8 +28,6 @@
     "tailwindcss": "^3.3.2",
     "vite": "^4.3.2"
   },
-  "description": "Một trang mạng xã hội với các chức năng cơ bản như đăng nhập, kết bạn, đăng bài viết và bình luận. Đây là đồ án môn học Kỹ thuật phát triển hệ thống Web của nhóm sinh viên trường Đại học Công nghệ Thông tin - ĐHQG TP.HCM.",
-  "main": "postcss.config.js",
   "author": "",
   "license": "ISC"
 }

@@ -4,6 +4,7 @@ import userService from '../../services/user.js';
 import { UserContext } from '../../App.jsx';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel, Button } from '@material-tailwind/react';
 import { Link } from 'react-router-dom';
+import { notifyFriendRequest, notifyFriendRequestAccepted } from '../../services/socket.js';
 
 function Friends() {
   const user = useContext(UserContext);
@@ -84,6 +85,7 @@ function Friends() {
             }
             return newFriendsData;
           });
+          notifyFriendRequestAccepted(friendId);
         })
         .catch(e => {
         console.log(e);
@@ -107,6 +109,7 @@ function Friends() {
             }
             return newFriendsData;
           });
+          notifyFriendRequest(friendId);
         })
         .catch(e => {
         console.log(e);
