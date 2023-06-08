@@ -17,12 +17,10 @@ function Post({ post }) {
   return (
     <section>
       <div className="post">
-          <div>
-            <img
-              className="postImg"
-              src={mediaURL}
-              alt=""
-            />
+          <div className='image'>
+            <Link to={'post/id'}>
+              <img src={mediaURL} alt=""/>
+            </Link>
           </div>
           <div>
             <span className="postCaption">{post.caption}</span>

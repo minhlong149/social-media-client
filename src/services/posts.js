@@ -1,3 +1,5 @@
+import axios from "axios";
+
 class PostService {
   getPostsForUser(user) {
     const posts = [
@@ -46,6 +48,7 @@ class PostService {
   }
 
   createPost(post) {
+    return axios.post(`api/`);
   }
 
 }
