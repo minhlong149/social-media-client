@@ -8,15 +8,15 @@ import userService from '../../services/user.js';
 import NavBar from '../Home/NavBar.jsx';
 
 function Posts() {
-  let like = false;
   const navigate = useNavigate();
   const user = useContext(UserContext);
   const [posts, setPosts] = useState([]);
   const [likes, setLikes] = useState([]);
+  let filter = 'popular';
   console.log(user);
 
   const retrievePosts = () => {
-    postService.getPostsForUser(user)
+    postService.getPostsForUser(user, filter)
       .then((response) => {
         console.log(response.data);
         setPosts(response.data.posts);
@@ -56,14 +56,14 @@ function Posts() {
     navigate(`/${user.username}/friends`);
   };
   const handleClickPost = (post) => {
-    navigate(`/post/${post.id}`, {state: {currentPost: post}});
+    navigate(`/post/${post.id}`);
   }
  
   return (
     <section>
       <div className='md:flex mt-4 max-w-4xl mx-auto gap-6 mb-24 md:mb-0'>
         <NavBar></NavBar>
-        <div className='mx-4 md:mx-0 md:w-9/12'>
+        <div className='mx-4 md:mx-0 md:w-8/12'>
           {posts.map((post) => {
             return (
               <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-5 p-4'>
@@ -154,7 +154,7 @@ function Posts() {
                         d='M2.25 12.76c0 1.6 1.123 2.994 2.707 3.227 1.087.16 2.185.283 3.293.369V21l4.076-4.076a1.526 1.526 0 011.037-.443 48.282 48.282 0 005.68-.494c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0012 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018z'
                       ></path>
                     </svg>
-                    {post.comments.length}
+                    {post.comments?.length}
                   </button>
                   <button className='flex gap-2 items-center'>
                     <svg
@@ -171,7 +171,7 @@ function Posts() {
                         d='M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z'
                       ></path>
                     </svg>
-                    {post.shares.length}
+                    {post.shares?.length}
                   </button>
                 </div>
               </div>
