@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+// import loginServices from '../../services/login.js';
 
 const SignupForm = ({ switchForm, updateUser }) => {
   const [password, setPassword] = useState('');
@@ -33,7 +34,7 @@ const SignupForm = ({ switchForm, updateUser }) => {
   return (
     <div className='flex justify-center'>
       <form
-        className='w-full max-w-md flex flex-col gap-4 border border-blue-500 bg-white rounded-lg px-6 py-8'
+        className='w-full max-w-md flex flex-col gap-4 border border-blue-500 bg-white rounded-3xl px-6 py-8'
         onSubmit={handleSignup}
       >
         <h2 className='text-2xl font-bold mb-4 text-blue-500 text-center'>Register</h2>

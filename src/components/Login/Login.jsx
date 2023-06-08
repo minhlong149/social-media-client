@@ -3,7 +3,7 @@ import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import './Login.css';
 
-const Login = ({ updateUser, message }) => {
+const Login = ({ updateUser }) => {
   const [hasAccount, setHasAccount] = useState(true);
   const updateFormState = () => {
     setHasAccount(!hasAccount);
@@ -11,15 +11,13 @@ const Login = ({ updateUser, message }) => {
   };
 
   return (
-    // <div className='grid h-screen place-items-center bg-gradient-to-r from-sky-500 to-indigo-500' class="fullcontent">
-    <div class='fullcontent'>
-      <div class="headings">
+    <div className='fullcontent'>
+      <div className='headings'>
         <h1>Social Media</h1>
         <h2>Social Media helps you connect and share with the people in your life.</h2>
-    </div>
+      </div>
 
-      {/* <div className='bg-white p-6 rounded-lg min-h-fit'> */}
-      <div class='form-container'>
+      <div className='form-container'>
         {hasAccount ? (
           <LoginForm switchForm={updateFormState} updateUser={updateUser} />
         ) : (
