@@ -4,11 +4,11 @@ class PostService {
   getPostsForUser(user) {
     return axios.get(`/api/posts?userID=${user._id}&sortBy=popular`);
   }
-  addLike(post, data) {
+  addLike(post, data, user) {
     return axios.post(`/api/posts/${post.id}/likes`, data, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2Y1NWUwMDQ1OWZhY2E0MDUwZWMwNCIsImlhdCI6MTY4NjE2NTE0OSwiZXhwIjoxNjg2MjUxNTQ5fQ.k2izz0znBiTFkNgYluqz9EX4KQvPBHnmILhrxP4-D8Q'
+        'Authorization': 'Bearer ' + user.accessToken,
       },
     });
   }
@@ -16,7 +16,7 @@ class PostService {
     return axios.delete(`/api/posts/${post.id}/likes/${user._id}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0M2Y1NWUwMDQ1OWZhY2E0MDUwZWMwNCIsImlhdCI6MTY4NjE2NTE0OSwiZXhwIjoxNjg2MjUxNTQ5fQ.k2izz0znBiTFkNgYluqz9EX4KQvPBHnmILhrxP4-D8Q'
+        'Authorization': 'Bearer ' + user.accessToken,
       },
     });
   }

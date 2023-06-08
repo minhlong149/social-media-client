@@ -14,7 +14,7 @@ function Posts() {
   const [posts, setPosts] = useState([]);
   const [likes, setLikes] = useState([]);
   console.log(user);
-  const filter = 'popular';
+
   const retrievePosts = () => {
     postService.getPostsForUser(user)
       .then((response) => {

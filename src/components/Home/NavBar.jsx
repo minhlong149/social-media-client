@@ -1,16 +1,16 @@
-import React from 'react';
-
+import React, { useContext } from 'react';
+import { UserContext } from '../../App.jsx';
 function NavBar() {
-   
+     const user = useContext(UserContext);
       const handleClickHome = () => {
         navigate(`/`);
       };
     return (
-      <div className='fixed md:static w-full bottom-0 md:w-3/12 -mb-5'>
-        <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-5'>
-          <div className='px-4 py-2 flex justify-between md:block shadow-md shadow-gray-500 md:shadow-none'>
+      <div className='fixed md:static w-full bottom-0 md:w-4/12 -mb-5'>
+        <div className=' rounded-md mb-5'>
+          <div className='px-4 py-2 flex justify-between md:block '>
             <a
-              className='text-sm md:text-md flex gap-1 md:gap-3 py-3 my-1 bg-sky-600 text-white md:-mx-7 px-6 md:px-7 rounded-md shadow-md shadow-gray-300 items-center'
+              className='text-sm md:text-md flex gap-1 md:gap-3 py-3 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300 items-center'
               onClick={handleClickHome}
             >
               <svg
@@ -31,8 +31,8 @@ function NavBar() {
               <span className='hidden md:block'>Home</span>
             </a>
             <a
-              className='text-sm md:text-md flex gap-1 md:gap-3 py-2 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300 items-center'
-              href='/friends'
+              className='text-sm md:text-md flex gap-1 md:gap-3 py-3 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300 items-center'
+              href={`/${user._id}}/friends`}
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -50,27 +50,7 @@ function NavBar() {
               </svg>
               <span className='hidden md:block'>Friends</span>
             </a>
-            <a
-              className='text-sm md:text-md flex gap-1 md:gap-3 py-2 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300 items-center'
-              href='/saved'
-            >
-              <svg
-                xmlns='http://www.w3.org/2000/svg'
-                fill='none'
-                viewBox='0 0 24 24'
-                stroke-width='1.5'
-                stroke='currentColor'
-                className='w-6 h-6'
-              >
-                <path
-                  stroke-linecap='round'
-                  stroke-linejoin='round'
-                  d='M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.25 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z'
-                ></path>
-              </svg>
-              <span className='hidden md:block'>Saved posts</span>
-            </a>
-
+        
             <a
               className='text-sm md:text-md flex gap-1 md:gap-3 py-2 my-2 hover:bg-blue-500 hover:bg-opacity-20 md:-mx-4 px-6 md:px-4 rounded-md transition-all hover:scale-110 hover:shadow-md shadow-gray-300 items-center'
               href='/settings'
