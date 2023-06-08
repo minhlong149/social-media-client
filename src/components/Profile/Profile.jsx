@@ -1,48 +1,57 @@
-import React, {useContext, useEffect} from 'react';
-import { UserContext } from '../../App.jsx';
+import React, {useState, useEffect, useContext} from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { UserContext } from '../../App.jsx';
 
 import postService from '../../services/posts.js';
 import userService from '../../services/user.js';
 import Post from '../Posts/Post.jsx';
+import Friends from './ProfileFriends.jsx';
 
-
-import { Card, Row, Col} from 'react';
 
 function Profile() {
   const user = useContext(UserContext);
-  const posts = postService.getPostsByUser(user);
+  const [username, setUsername] = useState("");
+  // const posts = postService.getPostsByUser(user);
+  const { userid } = useParams();
   
-  const [UserData, setUserData] = React.useState('');
-  const [PostsByUserData, setgetPostsByUserData] = React.useState('');
+  console.log(userid);
 
+  //  const getUser = () => {
+  //   userService.getUserById(userid)
+  //     .then((response) => {
+  //       setUsername(response.data.username);
+  //       setEmail(response.data.email);
+  //       setPhone(response.data.phone);
+  //       setFirstname(response.data.firstName);
+  //       setLastname(response.data.lastName);
+  //       setAvatarURL(response.data.avatarURL);
+  //       console.log(response.status);
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
   useEffect(() => {
-    getUser();
-   }, []);
+    async function fetchUser() {
+      const response = await userService.getUserById(userid);
+      const data = await response.data;
+      setUser(data);
+      setUsername(data.username);
+    }
+    fetchUser()
+   }, [userid]);
 
-   const getUser = () => {
-    userService.getUser(user)
-      .then((response) => {
-        console.log(response.status);
-        setUserData(response.data);
-        
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
-
-  const getPostsByUser = () => {
-    postService.getPostsByUser(user)
-      .then((response) =>{
-        console.log(response.status);
-        setgetPostsByUserData(response.data)
-      })
-      .catch((e) => {
-        console.log(e);
-      });
-  };
+  // const getPostsByUser = () => {
+  //   postService.getPostsByUser(user)
+  //     .then((response) =>{
+  //       console.log(response.status);
+  //       setgetPostsByUserData(response.data)
+  //     })
+  //     .catch((e) => {
+  //       console.log(e);
+  //     });
+  // };
 
 
   return (
@@ -54,7 +63,7 @@ function Profile() {
       <form class="flex-auto pl-6">
           <div class="flex flex-wrap">
             <h1 class="flex-auto text-lg font-semibold text-slate-900">
-              {user.firstName} {user.lastName}
+              {user.firstname} {user.lastname}
             </h1>
           </div>
           <div class="flex items-baseline mt-2 mb-2 pb-2">
@@ -73,7 +82,7 @@ function Profile() {
           </div>
           <div class="flex space-x-4 mb-6 text-sm font-medium">
             <div class="flex-auto flex space-x-4">
-              <Link to={`/${user.username}/friends`} state={user}>
+              <Link to={`/${username}/friends`} state={user}>
                 <button className='bg-sky-500 rounded text-white px-2 py-1'>View friend list</button>
               </Link>
               <Link to={`/settings`}>
