@@ -1,38 +1,27 @@
 import axios from "axios";
 
 class PostService {
-  getPostsForUser(user) {
-    const posts = [
-      {
-        id: 1,
-        caption: "This is a post",
-        author: user.username,
-      },
-      {
-        id: 2,
-        caption: 'This is another post',
-        author: user.username,
-      },
-    ];
-
-    return posts;
+  getPostsForUser(user, filter) {
+    return axios.get(`/api/posts?userID=${user._id}&sortBy=${filter}`);
   }
-
-  getFullPost(post) {
-    const fullPost = {
-      ...post,
-      comments: [
-        {
-          id: 1,
-          text: 'Since the post on the profile page only has the caption, we need to get the full post from the server.',
-        },
-        {
-          id: 2,
-          text: 'So that we can display the comments as well.',
-        },
-      ],
-    };
-    return fullPost;
+  addLike(post, data, user) {
+    return axios.post(`/api/posts/${post.id}/likes`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
+  }
+  unLike(post, user) {
+    return axios.delete(`/api/posts/${post.id}/likes/${user._id}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
+  }
+  getFullPost(postId) {
+    return axios.get(`/api/posts/${postId}`);
   }
 
   getPostsByUser(user) {
@@ -50,7 +39,11 @@ class PostService {
   createPost(post) {
     return axios.post(`api/`);
   }
-
+  createComment(comment) {
+    return axios.post(`/posts/${postId}/comments`);
+  }
 }
+
+
 
 export default new PostService();
