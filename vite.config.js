@@ -11,6 +11,10 @@ export default defineConfig({
         target: 'https://ie213-social-media-server.cyclic.app',
         changeOrigin: true,
       },
+      '/image': {
+        target: 'https://ie213-social-media-server.cyclic.app',
+        changeOrigin: true,
+      }
     }
   },
 });
