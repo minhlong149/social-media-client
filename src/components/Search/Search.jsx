@@ -1,6 +1,5 @@
 import React from 'react';
 import userService from '../../services/user.js';
-import JSONDATA from '../../MOCK_DATA.json';
 
 function Search () {
   const [searchQuery, setSearchQuery] = React.useState('');
