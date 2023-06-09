@@ -21,7 +21,9 @@ function Header({ logout }) {
         </div>
         <div className='flex items-center relative '>
           <div className='flex items-center gap-4'>
-            <Button text='New post' />
+            <Link to={`/create`}>
+              <Button text='New post' />
+            </Link>
             <Link to={`/notifications`}>
               <button className='flex items-center'>
                 <img src='bell.svg' className='' alt='' height={20} width={20} />
@@ -59,7 +61,7 @@ function Header({ logout }) {
               <Link to={`/settings`}>
                 <Button text='Settings' />
               </Link>
-              <Button text='Logout' action={logout} />
+              <Button text='Logout' action={() => logout()} />
             </div>
           </aside>
         </div>
