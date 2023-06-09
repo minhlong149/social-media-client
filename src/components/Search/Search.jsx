@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import userService from '../../services/user.js';
 import { UserContext } from '../../App.jsx';
 import { useParams, Link } from 'react-router-dom';
-import JSONDATA from '../../MOCK_DATA (1).json';
 import axios from 'axios';
 
 function Search () {
