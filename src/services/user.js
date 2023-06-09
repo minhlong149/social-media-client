@@ -1,20 +1,23 @@
 import axios from "axios";
 
 class UserService {
-  // getUserByUsername(searchQueryUser) {
-  //   return {
-  //     username: 'john',
-  //     firstName: 'John',
-  //     email: 'john@gmail.com',
-  //   };
-  // }
-
   find(query, by = "username") {
     return axios.get(
     `http://localhost:3000/api/users?${by}=${query}}`
     )
   }
 
+  getUser(user) {
+    return axios.get('/api/users/'+ user._id);
+  }
+
+  getFriends(user) {
+    return axios.get('/api/users/'+ user._id+'/friends');
+  }
+
+  getUserByUsername(userId) {
+    return axios.get(`/api/users/${userId}`);
+  }
 
   getFriendsOfFriends(user)
   {

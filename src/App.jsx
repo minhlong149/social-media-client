@@ -3,6 +3,12 @@ import React, { useEffect, useState } from 'react';
 import Home from './components/Home.jsx';
 import Login from './components/Login/Login.jsx';
 import loginServices from './services/login.js';
+import TimeAgo from 'javascript-time-ago';
+
+import en from 'javascript-time-ago/locale/en.json';
+
+TimeAgo.addDefaultLocale(en);
+
 
 export const UserContext = React.createContext();
 
