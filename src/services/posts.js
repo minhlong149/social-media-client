@@ -36,8 +36,13 @@ class PostService {
     return posts;
   }
 
-  createPost(post) {
-    return axios.post(`api/`);
+  createPost(post, user) {
+    return axios.post(`api/posts`, post, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
   }
   createComment(comment) {
     return axios.post(`/posts/${postId}/comments`);
