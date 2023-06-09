@@ -1,10 +1,9 @@
 import axios from "axios";
 
 class UserService {
-  find(query, by = "username") {
-    return axios.get(
-    `http://localhost:3000/api/users?${by}=${query}}`
-    )
+
+  findUser(searchQuery) {
+    return axios.get(`http://localhost:3000/api/users?username=${searchQuery}`)
   }
 
   getUser(user) {
