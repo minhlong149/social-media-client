@@ -80,13 +80,34 @@ function Search () {
           Tìm kiếm
         </button> */}
       </div>
-      <div className="grid grid-cols-5 gap-12 flex-col flex-warp justify-center mx-20 mb-10">
+      <div className="grid grid-cols-5 gap-12 flex-col flex-warp justify-center mx-5 mb-10">
+        
         {searchQuery.length === 0 ? (
-          <p className="text-black-500 text-lg my-12 flex item-center">No results</p>
+        <>
+          <div className="col-span-1"></div>
+          <div className="col-span-1"></div>
+          <div className="col-span-1 col-start-3">
+            <span className="text-black-500 text-lg my-12 flex item-center"></span>
+          </div>
+          <div className="col-span-1"></div>
+          <div className="col-span-1"></div>
+        </>
         ) : (
           searchResults.filter((results)=> {
             if (searchQuery == "") {
               return results
+            } else if (results.username.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase()).length == 0 ){
+              return (
+                <>
+                  <div className="col-span-1"></div>
+                  <div className="col-span-1"></div>
+                  <div className="col-span-1 col-start-3">
+                    <span className="text-black-500 text-lg my-12 flex item-center">No Results</span>
+                  </div>
+                  <div className="col-span-1"></div>
+                  <div className="col-span-1"></div>
+                </>
+              )
             } else if (results.username.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase())) {
               return results
             }
@@ -94,7 +115,7 @@ function Search () {
           <Link to = {'/user/'+ results.id}>
             <div
               key={results.id}
-              className="border border-gray-300 rounded-2xl p-12 flex flex-col justify-center items-center"
+              className="border-4 border-gray-300 rounded-2xl p-12 flex flex-col justify-center items-center hover:border-4 hover:border-gray-600 hover:rounded-2xl hover:hover:text-gray-600 hover:bg-slate-100"
             >
               <img
                 src={results.avatarURL}
