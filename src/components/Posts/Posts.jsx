@@ -88,7 +88,7 @@ function Posts() {
                   </div>
                   <div className='grow'>
                     <p>
-                      <a href='/profile'>
+                      <a href={`/${post.author.id}`}>
                         <span className='mr1 font-semibold cursor-pointer hover:underline'>
                           {`${post.author.lastName} ${post.author.firstName}`}
                         </span>
