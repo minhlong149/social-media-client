@@ -3,7 +3,7 @@ import axios from "axios";
 class UserService {
 
   findUser(searchQuery) {
-    return axios.get(`http://localhost:3000/api/users?username=${searchQuery}`)
+    return axios.get(`/api/users?username=${searchQuery}`)
   }
 
   getUser(user) {
