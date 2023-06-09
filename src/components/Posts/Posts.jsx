@@ -17,7 +17,7 @@ function Posts() {
     postService.getPostsForUser(user, filter, page)
       .then((response) => {
         console.log(response.data);
-        setPosts(response.data.posts);
+        setPosts(() => [...posts, ...response.data.posts]);
       })
       .catch((e) => {
         console.log(e);
@@ -60,6 +60,11 @@ function Posts() {
   };
   const handleClickPost = (post) => {
     navigate(`/post/${post.id}`);
+  }
+
+  const handleLoadMore = () => {
+    setPage(page + 1);
+    retrievePosts();
   }
  
   return (
@@ -183,6 +188,10 @@ function Posts() {
               </div>
             );
           })}
+
+          <button className='w-full text-center py-3 text-sm font-semibold text-gray-500 hover:text-gray-700 hover:underline'
+          onClick={handleLoadMore}>
+          Load more</button>
         </div>
       </div>
     </section>
