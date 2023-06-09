@@ -4,6 +4,7 @@ import { UserContext } from '../../App.jsx';
 import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
 import NavBar from '../Home/NavBar.jsx';
+import { notifyNewLike } from '../../services/notifications.js';
 
 function Posts() {
   const navigate = useNavigate();
@@ -52,6 +53,9 @@ function Posts() {
       res = await postService.addLike(post, data, user);
       console.log('Like this post');
       fetchLikes();
+
+      notifyNewLike(post.id, post.author.id);
+
       return;
     }
   }

@@ -29,13 +29,25 @@ function Home({ logout }) {
 
     socket.on('friendRequest', ({ userId, username }) => {
       console.log(`you received friend request from ${username}`);
-      setMessage(`${username} sent you a friend request`, userId);
+      setMessage(`${username} sent you a friend request`);
       setTimeout(() => setMessage(''), 5000);
     });
 
     socket.on('friendRequestAccepted', ({ userId, username }) => {
       console.log(`your friend request was accepted by ${username}`);
-      setMessage(`${username} accepted your friend request`, userId);
+      setMessage(`${username} accepted your friend request`);
+      setTimeout(() => setMessage(''), 5000);
+    });
+
+    socket.on('newPost', ({ postId, userId, username }) => {
+      console.log(`you received a new post from ${username}`);
+      setMessage(`${username} posted something new`);
+      setTimeout(() => setMessage(''), 5000);
+    });
+
+    socket.on('newLike', ({ postId, userId, username }) => {
+      console.log(`you received a new like from ${username}`);
+      setMessage(`${username} liked your post`);
       setTimeout(() => setMessage(''), 5000);
     });
 

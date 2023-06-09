@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import postService from '../../services/posts.js';
 import { UserContext } from '../../App.jsx';
+import { notifyNewPost } from '../../services/socket.js';
 function NewPost() {
   const user = useContext(UserContext);
 
@@ -12,6 +13,13 @@ function NewPost() {
       const post = getPostFromForm();
       const res = await postService.createPost(post, user);
       console.log(res);
+
+      notifyNewPost(
+        res._id,
+        user.friendsList
+          .filter((friend) => friend.status === 'accepted')
+          .map((friend) => friend.userId),
+      );
     } catch (error) {
       console.error(error);
     }
