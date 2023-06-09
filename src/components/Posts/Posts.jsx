@@ -4,7 +4,7 @@ import { UserContext } from '../../App.jsx';
 import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
 import NavBar from '../Home/NavBar.jsx';
-import { notifyNewLike } from '../../services/notifications.js';
+import { notifyNewLike } from '../../services/socket.js';
 
 function Posts() {
   const navigate = useNavigate();
