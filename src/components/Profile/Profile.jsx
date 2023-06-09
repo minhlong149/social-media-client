@@ -9,12 +9,13 @@ import Friends from './ProfileFriends.jsx';
 
 
 function Profile() {
-  const user = useContext(UserContext);
-  const [username, setUsername] = useState("");
+  // const user = useContext(UserContext);
+  const [usernameew, setUsername] = useState('');
+  const [user, setUser] = useState({});
   // const posts = postService.getPostsByUser(user);
-  const { userid } = useParams();
+  const { username } = useParams();
   
-  console.log(userid);
+  console.log(username);
 
   //  const getUser = () => {
   //   userService.getUserById(userid)
@@ -34,24 +35,24 @@ function Profile() {
 
   useEffect(() => {
     async function fetchUser() {
-      const response = await userService.getUserById(userid);
+      const response = await userService.getUserByUsername(username);
       const data = await response.data;
       setUser(data);
       setUsername(data.username);
     }
     fetchUser()
-   }, [userid]);
+   }, [username]);
 
-  // const getPostsByUser = () => {
-  //   postService.getPostsByUser(user)
-  //     .then((response) =>{
-  //       console.log(response.status);
-  //       setgetPostsByUserData(response.data)
-  //     })
-  //     .catch((e) => {
-  //       console.log(e);
-  //     });
-  // };
+  const getPostsByUser = () => {
+    postService.getPostsByUser(user)
+      .then((response) =>{
+        console.log(response.status);
+        // setgetPostsByUserData(response.data)
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
 
 
   return (
@@ -63,7 +64,7 @@ function Profile() {
       <form class="flex-auto pl-6">
           <div class="flex flex-wrap">
             <h1 class="flex-auto text-lg font-semibold text-slate-900">
-              {user.firstname} {user.lastname}
+              {user.firstName} {user.lastName}
             </h1>
           </div>
           <div class="flex items-baseline mt-2 mb-2 pb-2">
@@ -82,7 +83,7 @@ function Profile() {
           </div>
           <div class="flex space-x-4 mb-6 text-sm font-medium">
             <div class="flex-auto flex space-x-4">
-              <Link to={`/${username}/friends`} state={user}>
+              <Link to={`/${usernameew}/friends`} state={user}>
                 <button className='bg-sky-500 rounded text-white px-2 py-1'>View friend list</button>
               </Link>
               <Link to={`/settings`}>
