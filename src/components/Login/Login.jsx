@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
+import './Login.css';
 
-const Login = ({ updateUser, message }) => {
+const Login = ({ updateUser }) => {
   const [hasAccount, setHasAccount] = useState(true);
   const updateFormState = () => {
     setHasAccount(!hasAccount);
@@ -10,9 +11,13 @@ const Login = ({ updateUser, message }) => {
   };
 
   return (
-    <div className='grid h-screen place-items-center bg-blue-200'>
-      <h1>{message}</h1>
-      <div className='bg-white p-8'>
+    <div className='fullcontent'>
+      <div className='headings'>
+        <h1>Social Media</h1>
+        <h2>Social Media helps you connect and share with the people in your life.</h2>
+      </div>
+
+      <div className='form-container'>
         {hasAccount ? (
           <LoginForm switchForm={updateFormState} updateUser={updateUser} />
         ) : (

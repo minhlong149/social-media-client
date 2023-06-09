@@ -9,6 +9,10 @@ class UserService {
     return axios.get('/api/users/'+ user._id+'/friends');
   }
 
+  getUserByUsername(userId) {
+    return axios.get(`/api/users/${userId}`);
+  }
+
   getFriendsOfFriends(user)
   {
     return axios.get('api/users/'+ user._id+'/friendsoffriends');
