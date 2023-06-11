@@ -1,11 +1,19 @@
 import axios from "axios";
 
 class PostService {
-  getPostsForUser(user, filter) {
-    return axios.get(`/api/posts?userID=${user._id}&sortBy=${filter}`);
+  getPostsForUser(user, filter, numOfPage ) {
+    return axios.get(`/api/posts?userID=${user._id}&sortBy=${filter}&numOfPage=${numOfPage}`);
   }
   addLike(post, data, user) {
     return axios.post(`/api/posts/${post.id}/likes`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
+  }
+  addComment(post, data, user) {
+    return axios.post(`/api/posts/${post.id}/comments`, data, {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + user.accessToken,
@@ -20,8 +28,8 @@ class PostService {
       },
     });
   }
-  getFullPost(postId) {
-    return axios.get(`/api/posts/${postId}`);
+  getFullPost(postid) {
+    return axios.get(`/api/posts/${postid}`);
   }
 
   getPostsByUser(user) {
@@ -44,8 +52,14 @@ class PostService {
       },
     });
   }
-  createComment(comment) {
-    return axios.post(`/posts/${postId}/comments`);
+
+  addComment(data) {
+    return axios.post(`/api/${data.postId}/comments`, data, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
   }
 }
 

@@ -21,7 +21,7 @@ function Home({ logout }) {
       <main>
         <Routes>
           <Route path='/' element={<Posts />} />
-          <Route path='/post/:postId' element={<Post />}/>
+          <Route path='/post/:postid' element={<Post />}/>
           <Route path='/create' element={<NewPost />} />
           <Route path='/friends' element={<Friends />} />
           <Route path='/search' element={<Search />} />
