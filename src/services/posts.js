@@ -52,15 +52,6 @@ class PostService {
       },
     });
   }
-
-  addComment(data) {
-    return axios.post(`/api/${data.postId}/comments`, data, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        'Authorization': 'Bearer ' + user.accessToken,
-      },
-    });
-  }
 }
 
 

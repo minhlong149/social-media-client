@@ -10,6 +10,8 @@ function Post() {
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
   const [liked, setLiked] = useState(false);
+  const [comment, setComment] = useState("");
+
   const { postid } = useParams();
   console.log(postid);
   console.log(user);
@@ -50,17 +52,12 @@ function Post() {
   }
   
   //AddComments
-    let initialCommentState = "";
-    const [comment, setComment] = useState(initialCommentState);
     const [submitted, setSubmitted] = useState(false);
-    const onChangeComment = e => {
-        const comment = e.target.value;
-        setComment(comment);
-    }
     const saveComment = () => {
         var data = {
             comment: comment,
-            postId: postid
+            postId: postid,
+            user: user
         }
         postService.addComment(post, data, user)
         .then(response => {
@@ -221,22 +218,23 @@ function Post() {
                 </div>
               </div>
             </div>
-            <div class="max-w-lg shadow-md">
-              <form action="" class="w-full p-4">
-                <div class="mb-2">
-                  <label for="comment" class="bg-white shadow-md shadow-gray-300 p-5 text-2xl font-semibold">Add a comment</label>
-                  <textarea 
+    
+            <div>
+              <form>
+                <div>
+                  <input 
                       class="w-full h-20 p-2 border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 "
                       name="comment" 
-                      placeholder=""
+                      placeholder="Write a comment"
                       value={comment}
-                      onChange={onChangeComment}
+                      onChange={(e) => setComment(e.target.value)}
 
                   />
                 </div>
                 <button class="px-3 py-2 text-sm text-blue-100 bg-blue-600 rounded" onClick={saveComment}>Comment</button>
               </form>
             </div>
+
             <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl   font-semibold'>
               Comment
               {post.comments && post.comments.length != 0 ? (
