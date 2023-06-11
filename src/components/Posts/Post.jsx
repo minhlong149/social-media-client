@@ -198,7 +198,6 @@ function Post() {
                 </div>
               </div>
             </div>
-
             <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl   font-semibold'>
               Comment
               {post.comments && post.comments.length != 0 ? (

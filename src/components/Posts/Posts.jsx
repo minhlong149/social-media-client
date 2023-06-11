@@ -27,17 +27,17 @@ function Posts() {
 
   const retrievePosts = async () => {
     setIsLoading(false);
-    postService.getPostsForUser(user, currentTab, page)
+    postService
+      .getPostsForUser(user, currentTab, page)
       .then((response) => {
         console.log(response.data);
         setPosts(response.data.posts);
         setIsLoading(true);
       })
- 
       .catch((e) => {
         console.log(e);
       });
-  }
+  };
 
   useEffect(() => {
     retrievePosts();
@@ -77,6 +77,8 @@ function Posts() {
     navigate(`/post/${post.id}`);
   }
   console.log(currentTab);
+
+ 
   return (
     <section className='bg-gray-100'>
       <div className='flex mt-4 max-w-4xl mx-auto gap-6 mb-24 md:mb-0 '>
@@ -252,7 +254,8 @@ function Posts() {
             ))}
           </TabsBody>
         </Tabs>
-      </div>
+
+        </div>
     </section>
   );
   }
