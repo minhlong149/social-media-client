@@ -84,11 +84,15 @@ function Posts() {
       <div className='flex mt-4 max-w-4xl mx-auto gap-6 mb-24 md:mb-0 '>
         <NavBar></NavBar>
         <Tabs id='filter-post' value=''>
-          <TabsHeader>
+          <TabsHeader
+            indicatorProps={{
+              className: 'bg-transparent',
+            }}
+          >
             {filters.map(({ label, value }) => (
               <Tab
                 className={`text-lg hover:bg-transparent hover:bg-white  hover:text-blue-600 ${
-                  currentTab === value ? 'font-bold' : ''
+                  currentTab === value ? 'font-bold ' : ''
                 }`}
                 key={value}
                 value={value}
@@ -119,7 +123,7 @@ function Posts() {
                             </div>
                             <div className='grow'>
                               <p>
-                                <a href='/profile'>
+                                <a href={`/${post.author.id}`}>
                                   <span className='mr1 font-semibold cursor-pointer hover:underline'>
                                     {`${post.author.lastName} ${post.author.firstName}`}
                                   </span>
@@ -254,8 +258,7 @@ function Posts() {
             ))}
           </TabsBody>
         </Tabs>
-
-        </div>
+      </div>
     </section>
   );
   }
