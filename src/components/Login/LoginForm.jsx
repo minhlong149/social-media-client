@@ -1,32 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-// This code shows a login form.
-// It allows you to enter a username and password and then click a button to log in. 
+const LoginForm = ({ switchForm, updateUser }) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [saveInfo, setSaveInfo] = useState(false);
 
-// It does not actually log you in, but instead calls a function that is passed as a prop to the component.
-// The function that is passed as a prop is called when the button is clicked, 
-// and it is passed an object with the username and password as properties.
-
-export function LoginForm({ login }) {
-  const handleLogin = () => {
-    const credential = getCredentialsFromForm();
-    login(credential);
-  };
-
-  const getCredentialsFromForm = () => {
-    // TODO: Get credential from the form
-    return {
-      username: 'root',
-      password: '123456',
-    };
+  const handleLogin = (event) => {
+    event.preventDefault();
+    const credential = { username, password, saveInfo };
+    updateUser(credential);
   };
 
   return (
-    <div>
-      <h1 className='text-2xl font-bold'>Login</h1>
-      <button className='bg-sky-500 rounded text-white px-2 py-1' onClick={handleLogin}>
-        Login
-      </button>
-    </div>
+    <form
+      className='w-full max-w-md mx-auto flex flex-col gap-5 border bg-white border-blue-500 rounded-3xl px-6 py-8'
+      onSubmit={handleLogin}
+    >
+      <h2 className='text-2xl font-bold mb-4 text-blue-500 text-center'>Login</h2>
+      <div className='grid gap-2'>
+        <input
+          className='col-span-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500'
+          type='text'
+          name='username'
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          placeholder='Enter your username'
+        />
+      </div>
+
+      <div className='grid gap-2'>
+        <input
+          className='col-span-1 border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring focus:border-blue-500'
+          type='password'
+          name='password'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          placeholder='Enter your password'
+        />
+      </div>
+
+      <input
+        className='bg-blue-500 text-white px-4 py-2 rounded cursor-pointer'
+        type='submit'
+        value='Login'
+      />
+
+      <div className='flex justify-between items-center gap-2'>
+        <label>
+          <input
+            className='cursor-pointer mr-1'
+            type='checkbox'
+            name='saveInfo'
+            checked={saveInfo}
+            onChange={(e) => setSaveInfo(e.target.checked)}
+          />
+          Remember me
+        </label>
+
+        <a className='hover:text-blue-500 hover:underline' href='#' onClick={switchForm}>
+          Create new account
+        </a>
+      </div>
+    </form>
   );
-}
+};
+
+export default LoginForm;

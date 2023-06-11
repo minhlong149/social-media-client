@@ -1,28 +1,31 @@
 import React, { useState } from 'react';
+import LoginForm from './LoginForm';
+import SignupForm from './SignupForm';
+import './Login.css';
 
-import { LoginForm } from './LoginForm.jsx';
-import { SignupForm } from './SignupForm.jsx';
-import loginServices from '../../services/login.js';
-
-function Login({ login }) {
+const Login = ({ updateUser }) => {
   const [hasAccount, setHasAccount] = useState(true);
-
-  const signup = (credential) => {
-    loginServices.createNewAccount(credential);
-    login(credential);
+  const updateFormState = () => {
+    setHasAccount(!hasAccount);
+    console.log(`Switch to ${hasAccount ? 'register' : 'sign in'} component`);
   };
 
   return (
-    <div>
-      {/* The form to login or signup */}
-      {hasAccount ? <LoginForm login={login} /> : <SignupForm signup={signup} />}
+    <div className='fullcontent'>
+      <div className='headings'>
+        <h1>Social Media</h1>
+        <h2>Social Media helps you connect and share with the people in your life.</h2>
+      </div>
 
-      {/* The button to switch between the login and signup forms */}
-      <button onClick={() => setHasAccount(!hasAccount)}>
-        Switch to {hasAccount ? 'Sign up' : 'Login'} page
-      </button>
+      <div className='form-container'>
+        {hasAccount ? (
+          <LoginForm switchForm={updateFormState} updateUser={updateUser} />
+        ) : (
+          <SignupForm switchForm={updateFormState} updateUser={updateUser} />
+        )}
+      </div>
     </div>
   );
-}
+};
 
 export default Login;
