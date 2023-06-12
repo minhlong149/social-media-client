@@ -224,7 +224,7 @@ function Post() {
                 <div>
                   <input 
                       class="w-full h-20 p-2 border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 "
-                      name="comment" 
+                      type='text'
                       placeholder="Write a comment"
                       value={comment}
                       onChange={(e) => setComment(e.target.value)}
