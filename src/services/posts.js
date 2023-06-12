@@ -12,6 +12,14 @@ class PostService {
       },
     });
   }
+  addComment(post, data, user) {
+    return axios.post(`/api/posts/${post.id}/comments`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
+  }
   unLike(post, user) {
     return axios.delete(`/api/posts/${post.id}/likes/${user._id}`, {
       headers: {
@@ -43,9 +51,6 @@ class PostService {
         'Authorization': 'Bearer ' + user.accessToken,
       },
     });
-  }
-  createComment(comment) {
-    return axios.post(`/posts/${postId}/comments`);
   }
 }
 

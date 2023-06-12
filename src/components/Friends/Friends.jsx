@@ -150,7 +150,7 @@ function Friends() {
       <TabsHeader
         className='pt-5 border border-transparent border-b-gray-200 text-gray-500 font-semibold cursor-pointer justify-around'
         indicatorProps={{
-          className: '',
+          className: 'bg-transparent',
         }}
       >
         {navData.map(({ title, label }) => (
