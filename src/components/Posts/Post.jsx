@@ -10,6 +10,8 @@ function Post() {
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
   const [liked, setLiked] = useState(false);
+  const [comment, setComment] = useState("");
+
   const { postid } = useParams();
   console.log(postid);
   console.log(user);
@@ -48,8 +50,26 @@ function Post() {
       return;
     }
   }
+  
+  //AddComments
+    const [submitted, setSubmitted] = useState(false);
+    const saveComment = () => {
+        var data = {
+            comment: comment,
+            postId: postid,
+            user: user
+        }
+        postService.addComment(post, data, user)
+        .then(response => {
+            setSubmitted(true);
+        })
+        .catch(e => {
+            console.log(e);
+        })
+    }
   console.log(post);
   console.log(liked);
+  console.log(comment);
   return Object.keys(post).length === 0 ? (
     <section>
       <div className='justify-items-center m-10'>
@@ -200,6 +220,23 @@ function Post() {
                 </div>
               </div>
             </div>
+    
+            <div>
+              <form>
+                <div>
+                  <input 
+                      class="w-full h-20 p-2 border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 "
+                      type='text'
+                      placeholder="Write a comment"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}
+
+                  />
+                </div>
+                <button class="px-3 py-2 text-sm text-blue-100 bg-blue-600 rounded" onClick={saveComment}>Comment</button>
+              </form>
+            </div>
+
             <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl   font-semibold'>
               Comment
               {post.comments && post.comments.length != 0 ? (
