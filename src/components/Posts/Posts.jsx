@@ -4,6 +4,7 @@ import { UserContext } from '../../App.jsx';
 import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
 import NavBar from '../Home/NavBar.jsx';
+import { notifyNewLike } from '../../services/socket.js';
 import { Tabs, TabsHeader, TabsBody, Tab, TabPanel } from '@material-tailwind/react';
 
 function Posts() {
@@ -67,6 +68,9 @@ function Posts() {
       res = await postService.addLike(post, data, user);
       console.log('Like this post');
       fetchLikes();
+
+      notifyNewLike(post.id, post.author.id);
+
       return;
     }
   }
