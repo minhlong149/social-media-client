@@ -1,10 +1,9 @@
 import axios from "axios";
 
 class UserService {
-  find(query, by = "username") {
-    return axios.get(
-    `http://localhost:3000/api/users?${by}=${query}}`
-    )
+
+  findUser(searchQuery) {
+    return axios.get(`/api/users?username=${searchQuery}`)
   }
 
   getUser(user) {
@@ -25,27 +24,51 @@ class UserService {
    
   }
 
+  getFriendsOfFriends(user)
+  {
+    return axios.get('api/users/'+ user.id+'/friendsoffriends');
+   
+  }
+
   getFriends(user) {
     return axios.get('/api/users/'+ user._id+'/friends');
   }
 
   acceptRequest(user, friendId)
   {
-    return axios.put('api/users/'+ user._id+'/friends/' + friendId);
+    return axios.put('api/users/'+ user._id+'/friends/' + friendId, {}, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
   }
 
   denyRequest(user, friendId)
   {
-    return axios.delete('api/users/'+ user._id+'/friends/' + friendId);
+    return axios.delete('api/users/'+ user._id+'/friends/' + friendId, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
   }
 
   sendRequest(user, friend)
   {
-    return axios.post('api/users/'+ user._id+'/friends/', friend);
+    return axios.post('api/users/'+ user._id+'/friends/', friend, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
+    });
   }
 
 
+
+
 }
+
 
 
 export default new UserService();

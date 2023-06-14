@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-// import loginServices from '../../services/login.js';
+import loginServices from '../../services/login.js';
 
-const SignupForm = ({ switchForm, updateUser }) => {
+const SignupForm =  ({ switchForm, updateUser }) => {
   const [password, setPassword] = useState('');
-  const handleSignup = (event) => {
+  const handleSignup = async (event) => {
     event.preventDefault();
     const {
       username: { value: username },
@@ -28,7 +28,8 @@ const SignupForm = ({ switchForm, updateUser }) => {
       gender,
     };
     console.log('Signup detail: ', credential);
-    updateUser(credential);
+    const returnedUser = await loginServices.createNewAccount(credential);
+    updateUser(returnedUser);
   };
 
   return (
