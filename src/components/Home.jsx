@@ -86,7 +86,7 @@ function Aside({ message }) {
   if (message === '') return <></>;
   return (
     <Link to='/notifications'>
-      <aside className='absolute bottom-6 right-6'>
+      <aside className='absolute bottom-6 right-6 z-50'>
         <div className='bg-blue-400 rounded-lg shadow-lg p-4 border border-blue-500'>
           <p className='text-sm text-white'>{message}</p>
         </div>

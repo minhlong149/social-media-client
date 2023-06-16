@@ -47,34 +47,32 @@ io.on('connection', (socket) => {
     }
   });
 
-  socket.on('newPost'),
-    ({ postId, friendIds }) => {
-      for (let [id, socket] of io.sockets.sockets) {
-        if (friendIds.includes(socket.userId)) {
-          console.log(`sending new post to client ${id}`);
-          io.to(id).emit('newPost', {
-            postId: postId,
-            userId: socket.userId,
-            username: socket.username,
-          });
-        }
+  socket.on('newPost', ({ postId, friendIds }) => {
+    for (let [id, socket] of io.sockets.sockets) {
+      if (friendIds.includes(socket.userId)) {
+        console.log(`sending new post to client ${id}`);
+        io.to(id).emit('newPost', {
+          postId: postId,
+          userId: socket.userId,
+          username: socket.username,
+        });
       }
-    };
+    }
+  });
 
-  socket.on('newLike'),
-    ({ postId, userId }) => {
-      for (let [id, socket] of io.sockets.sockets) {
-        if (socket.userId == userId) {
-          console.log(`sending new like to client ${id}`);
-          io.to(id).emit('newLike', {
-            postId: postId,
-            userId: socket.userId,
-            username: socket.username,
-          });
-          break;
-        }
+  socket.on('newLike', ({ postId, userId }) => {
+    for (let [id, socket] of io.sockets.sockets) {
+      if (socket.userId == userId) {
+        console.log(`sending new like to client ${id}`);
+        io.to(id).emit('newLike', {
+          postId: postId,
+          userId: socket.userId,
+          username: socket.username,
+        });
+        break;
       }
-    };
+    }
+  });
 
   socket.on('disconnect', () => {
     console.log(`user ${socket.userId} disconnected`);
