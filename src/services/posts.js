@@ -12,14 +12,14 @@ class PostService {
       },
     });
   }
-  addComment(post, data, user) {
-    return axios.post(`/api/posts/${post.id}/comments`, data, {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + user.accessToken,
-      },
-    });
-  }
+  // addComment(post, data, user) {
+  //   return axios.post(`/api/posts/${post.id}/comments`, data, {
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + user.accessToken,
+  //     },
+  //   });
+  // }
   unLike(post, user) {
     return axios.delete(`/api/posts/${post.id}/likes/${user._id}`, {
       headers: {
@@ -46,11 +46,36 @@ class PostService {
 
   createPost(post, user) {
     return axios.post(`api/posts`, post, {
+      // headers: {
+      //   'Content-Type': 'multipart/form-data',
+      //   'Authorization': 'Bearer ' + user.accessToken,
+      // },
+    });
+  }
+  createComment = async (postid, newComment, user) => {
+    return axios.post(`/api/${postid}/comments`, newComment, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer ' + user.accessToken,
       },
     });
+  }
+  
+  updateComment = async (postid, id, updatedComment, user) => {
+    try {
+      const response = await api.put(`/${postid}/comments/${id}`, updatedComment);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  deleteComment = async (postid, id, user) => {
+    try {
+      await api.delete(`/&{postid}/comments/${id}`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 

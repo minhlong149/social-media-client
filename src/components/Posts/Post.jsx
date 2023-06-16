@@ -3,6 +3,7 @@ import { UserContext } from '../../App.jsx';
 import {  useParams } from 'react-router-dom';
 import postService from '../../services/posts.js';
 import ReactTimeAgo from 'react-time-ago';
+import CommentForm from './CommentForm.jsx';
 
 
 function Post() {
@@ -10,11 +11,11 @@ function Post() {
   const [post, setPost] = useState({});
   const [author, setAuthor] = useState("");
   const [liked, setLiked] = useState(false);
-  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState("");
 
   const { postid } = useParams();
-  console.log(postid);
-  console.log(user);
+  // console.log(postid);
+  // console.log(user);
   useEffect(() => {
     async function fetchPost() {
       const response = await postService.getFullPost(postid);
@@ -52,24 +53,67 @@ function Post() {
   }
   
   //AddComments
-    const [submitted, setSubmitted] = useState(false);
-    const saveComment = () => {
-        var data = {
-            comment: comment,
-            postId: postid,
-            user: user
-        }
-        postService.addComment(post, data, user)
-        .then(response => {
-            setSubmitted(true);
-        })
-        .catch(e => {
-            console.log(e);
-        })
-    }
-  console.log(post);
-  console.log(liked);
-  console.log(comment);
+    // const [submitted, setSubmitted] = useState(false);
+    // const saveComment = () => {
+    //     var data = {
+    //         comment: comment,
+    //         postId: postid,
+    //         user: user
+    //     }
+    //     postService.addComment(post, data, user)
+    //     .then(response => {
+    //         setSubmitted(true);
+    //     })
+    //     .catch(e => {
+    //         console.log(e);
+    //     })
+    // }
+    const addComment = async (newComment) => {
+      setComments((prevComments) => [...prevComments, newComment]);
+      const createdComment = await postService.createComment(postid, newComment, user);
+      setComments((prevComments) => [...prevComments, createdComment]);
+    };
+  
+    // const editComment = async (updatedComment, index) => {
+    //   setComments((prevComments) => {
+    //     const updatedComments = [...prevComments];
+    //     updatedComments[index] = updatedComment;
+    //   });
+    //   const updated = await postService.updateComment(postid, id, updatedComment);
+    //   setComments((prevComments) =>
+    //     prevComments.map((comment) => (comment.id === id ? updated : comment))
+    //   );
+    // };
+  
+    // const deleteComment = (index) => {
+    //   setComments(async (prevComments) => {
+    //     const updatedComments = [...prevComments];
+    //     updatedComments.splice(index, 1);
+    //     await postService.deleteComment(postid, id);
+    //     setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
+    //   });
+      
+    // };
+    // const handleCreateComment = async (postid, newComment) => {
+    //   const createdComment = await postService.createComment(postid, newComment);
+    //   setComments((prevComments) => [...prevComments, createdComment]);
+    // };
+  
+    // const handleUpdateComment = async (postid, id, updatedComment) => {
+    //   const updated = await postService.updateComment(postid, id, updatedComment);
+    //   setComments((prevComments) =>
+    //     prevComments.map((comment) => (comment.id === id ? updated : comment))
+    //   );
+    // };
+  
+    // const handleDeleteComment = async (postid, id) => {
+    //   await postService.deleteComment(postid, id);
+    //   setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
+    // };
+
+  console.log(postid);
+  // console.log(liked);
+  console.log(comments);
   return Object.keys(post).length === 0 ? (
     <section>
       <div className='justify-items-center m-10'>
@@ -220,20 +264,8 @@ function Post() {
             </div>
     
             <div>
-              <form>
-                <div>
-                  <input 
-                      class="w-full h-20 p-2 border rounded focus:outline-none focus:ring-gray-300 focus:ring-1 "
-                      type='text'
-                      placeholder="Write a comment"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-
-                  />
-                </div>
-                <button class="px-3 py-2 text-sm text-blue-100 bg-blue-600 rounded" onClick={saveComment}>Comment</button>
-              </form>
-            </div>
+              <CommentForm submitComment={addComment} />
+            </div> 
 
             <div className='bg-white shadow-md shadow-gray-300 rounded-md mb-10 p-5 text-3xl   font-semibold'>
               Comment
@@ -266,8 +298,10 @@ function Post() {
                         </div>
                       </div>
                       <div>
-                        <p class='my-3 ml-11 mr-3 text-sm font-normal'>{comment?.text}</p>
-                      </div>
+                        <p class='my-3 ml-11 mr-3 text-sm font-normal'>
+                        {comment?.text} 
+                      </p>
+                      </div>                     
                     </div>
                   );
                 })
