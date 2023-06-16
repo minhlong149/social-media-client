@@ -191,7 +191,9 @@ function Post() {
               </button>
               <button
                 className='flex gap-2 items-center my-10'
-                title={post.shares.map((share) => share.lastName + ' ' + share.firstName).join(', ')}
+                title={post.shares
+                  .map((share) => share.lastName + ' ' + share.firstName)
+                  .join(', ')}
               >
                 <svg
                   xmlns='http://www.w3.org/2000/svg'
@@ -225,7 +227,7 @@ function Post() {
                 </div>
                 <div className='grow'>
                   <p>
-                    <a href='/profile'>
+                    <a href={`/${post.author.id}`}>
                       <span className='mr1 font-semibold cursor-pointer hover:underline'>
                         {`${author.lastName} ${author.firstName}`}
                       </span>
@@ -286,7 +288,7 @@ function Post() {
 
                         <div className='grow'>
                           <p>
-                            <a href='/profile'>
+                            <a href={`/${comment?.userID.id}`}>
                               <span className='mr1 font-semibold text-base cursor-pointer hover:underline'>
                                 {`${comment?.userID.lastName} ${comment?.userID.firstName}`}
                               </span>
