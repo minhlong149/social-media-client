@@ -4,9 +4,9 @@
   "type": "module",
   "main": "server.js",
   "scripts": {
-    "start": "vite --open",
+    "prestart": "rm -rf dist && npm run build",
+    "start": "node server.js",
     "dev": "vite --open",
-    "server": "npm run build && node server.js",
     "build": "vite build",
     "preview": "vite preview"
   },

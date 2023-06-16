@@ -1,3 +1,4 @@
+import axios from 'axios';  
 import React, { useEffect, useState } from 'react';
 
 import Home from './components/Home.jsx';
@@ -8,7 +9,7 @@ import TimeAgo from 'javascript-time-ago';
 import en from 'javascript-time-ago/locale/en.json';
 
 TimeAgo.addDefaultLocale(en);
-
+axios.defaults.baseURL = 'https://ie213-social-media-server.cyclic.app';
 
 export const UserContext = React.createContext();
 
