@@ -46,10 +46,10 @@ class PostService {
 
   createPost(post, user) {
     return axios.post(`api/posts`, post, {
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      //   'Authorization': 'Bearer ' + user.accessToken,
-      // },
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        'Authorization': 'Bearer ' + user.accessToken,
+      },
     });
   }
   createComment = async (postid, newComment, user) => {
@@ -61,22 +61,22 @@ class PostService {
     });
   }
   
-  updateComment = async (postid, id, updatedComment, user) => {
-    try {
-      const response = await api.put(`/${postid}/comments/${id}`, updatedComment);
-      return response.data;
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // updateComment = async (postid, id, updatedComment, user) => {
+  //   try {
+  //     const response = await api.put(`/${postid}/comments/${id}`, updatedComment);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
   
-  deleteComment = async (postid, id, user) => {
-    try {
-      await api.delete(`/&{postid}/comments/${id}`);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+  // deleteComment = async (postid, id, user) => {
+  //   try {
+  //     await api.delete(`/&{postid}/comments/${id}`);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // }
 }
 
 
